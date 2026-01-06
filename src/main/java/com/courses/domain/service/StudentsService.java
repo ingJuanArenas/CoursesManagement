@@ -33,7 +33,7 @@ public class StudentsService {
     }
 
     public StudentDTO update(Long id, StudentDTO studentDTO) {
-        studentRepository.update(id, studentDTO);
+       return  studentRepository.update(id, studentDTO);
     }
 
     public void delete(Long id) {

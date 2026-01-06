@@ -34,7 +34,7 @@ public class CoursesService {
     }
 
     public CourseDTO update(Long id, CourseDTO courseDTO) {
-        courseRepository.update(id, courseDTO);
+        return courseRepository.update(id, courseDTO);
     }
 
     public void delete(Long id) {
