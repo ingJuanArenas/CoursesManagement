@@ -8,7 +8,7 @@ public interface StudentsRepository {
     
     List<StudentDTO> getAll();
     StudentDTO getById(Long id);
-    StudentDTO getByName(String name);
+    List<StudentDTO> getByName(String name);
     StudentDTO save (StudentDTO studentDTO);
     StudentDTO update(Long id, StudentDTO studentDTO);
     void delete(Long id);
