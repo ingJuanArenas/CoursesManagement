@@ -5,14 +5,15 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.CourseDTO;
+import com.courses.persistence.repository.CoursesRepositoryImpl;
 
 @Service
 public class CoursesService {
     
 
-    private final CourseRepositoryImpl courseRepository;
+    private final CoursesRepositoryImpl courseRepository;
 
-    public CoursesService(CourseRepositoryImpl courseRepository) {
+    public CoursesService(CoursesRepositoryImpl courseRepository) {
         this.courseRepository = courseRepository;
     }
 
@@ -37,6 +38,6 @@ public class CoursesService {
     }
 
     public void delete(Long id) {
-        courseRepository.deleteById(id);
+        courseRepository.delete(id);
     }
 }

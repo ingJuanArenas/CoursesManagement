@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.StudentDTO;
+import com.courses.persistence.repository.StudentsRepositoryImpl;
 
 @Service
 public class StudentsService {
     
-    private final StudentRepositoryImpl studentRepository;
+    private final StudentsRepositoryImpl studentRepository;
 
-    public StudentsService(StudentRepositoryImpl studentRepository) {
+    public StudentsService(StudentsRepositoryImpl studentRepository) {
         this.studentRepository = studentRepository;
     }
 
@@ -36,7 +37,7 @@ public class StudentsService {
     }
 
     public void delete(Long id) {
-        studentRepository.deleteById(id);
+        studentRepository.delete(id);
     }
 }
 
