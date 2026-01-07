@@ -18,5 +18,5 @@ public interface CoursesMapper {
     CourseDTO toDto (Course course);
     List<CourseDTO> toDtos (List<Course> courses);
 
-    void UpdateEntityFromDto(CourseDTO courseDTO, @MappingTarget Course course);
+    void updateEntityFromDto(CourseDTO courseDTO, @MappingTarget Course course);
 }
