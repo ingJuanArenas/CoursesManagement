@@ -5,45 +5,61 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.StudentDTO;
+import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.repository.StudentsRepository;
+import com.courses.persistence.crud.StudentsCRUD;
+import com.courses.persistence.mapper.StudentsMapper;
+import com.courses.persistence.model.Student;
 
 @Repository
 public class StudentsRepositoryImpl  implements StudentsRepository{
 
+    private final StudentsCRUD studentsCRUD;
+    private final StudentsMapper studentsMapper;
+
+    public StudentsRepositoryImpl(StudentsCRUD studentsCRUD, StudentsMapper studentsMapper) {
+        this.studentsCRUD = studentsCRUD;
+        this.studentsMapper = studentsMapper;
+    }
+
     @Override
     public List<StudentDTO> getAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAll'");
+       return studentsMapper.toDtos(studentsCRUD.findAll());
     }
 
     @Override
     public StudentDTO getById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getById'");
+        return studentsMapper.toDto(studentsCRUD.findById(id).orElseThrow(
+        () -> new NotFoundException("Student not found with id: " + id)
+        ));
     }
 
     @Override
     public List<StudentDTO> getByName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getByName'");
+       return studentsMapper.toDtos(studentsCRUD.findAllByNameContainingIgnoreCase(name));
     }
 
     @Override
     public StudentDTO save(StudentDTO studentDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+       Student student = studentsMapper.toEntity(studentDTO);
+       return studentsMapper.toDto(studentsCRUD.save(student));
     }
 
     @Override
     public StudentDTO update(Long id, StudentDTO studentDTO) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Student student = studentsCRUD.findById(id).orElseThrow(
+        () -> new NotFoundException("Student not found with id: " + id)
+        );
+
+
+        studentsMapper.UpdateEntityFromDto(studentDTO, student);
+        return studentsMapper.toDto(studentsCRUD.save(student));
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+       Student student = studentsMapper.toEntity(getById(id));
+       studentsCRUD.delete(student);
     }
 
     

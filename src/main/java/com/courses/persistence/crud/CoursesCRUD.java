@@ -7,5 +7,6 @@ import org.springframework.data.repository.ListCrudRepository;
 import com.courses.persistence.model.Course;
 
 public interface CoursesCRUD extends ListCrudRepository<Course, Long>{
-    List<Course> findAllByName(String name);
+    List<Course> findAllByNameContainingIgnoreCase(String name);
+
 }

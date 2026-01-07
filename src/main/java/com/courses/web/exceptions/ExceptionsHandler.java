@@ -23,9 +23,9 @@ public class ExceptionsHandler {
     }
 
 
-
     @ExceptionHandler(Exception.class)
-    public Error handleException(Exception e) {
-        return new Error("Exception", e.getMessage());
+    public ResponseEntity<Error> handleException(Exception e) {
+        Error error = new Error("Internal Server Error", e.toString());
+        return ResponseEntity.status(500).body(error);
     }
 }
