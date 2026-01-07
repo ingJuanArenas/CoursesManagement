@@ -44,11 +44,13 @@ public class CoursesController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<CourseDTO>> getByName(@RequestParam String name){
+    public ResponseEntity<List<CourseDTO>> getByName(@RequestParam("name") String name){
         List<CourseDTO> courses = coursesService.getByName(name);
         if (courses.isEmpty()) {
             throw new NotFoundException("No courses found");
         }
+
+
         return ResponseEntity.ok(courses);
     }
 
