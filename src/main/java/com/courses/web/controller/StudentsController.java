@@ -17,6 +17,11 @@ import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.service.StudentsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/api/students")
 public class StudentsController {
@@ -27,6 +32,11 @@ public class StudentsController {
         this.studentsService = studentsService;
     }
 
+    @Operation(summary = "Get all students", description = "Returns a list of all students.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @GetMapping
     public ResponseEntity<List<StudentDTO>> getAll(){
         List<StudentDTO> students = studentsService.getAll();
@@ -37,11 +47,22 @@ public class StudentsController {
         return ResponseEntity.ok(students);
     }
 
+    @Operation(summary = "Get student by id", description = "Returns a student by id.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<StudentDTO> getById(@PathVariable Long id){
         return ResponseEntity.ok(studentsService.getById(id));
     }
 
+
+    @Operation(summary = "Search students by name", description = "Returns students by name.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
     @GetMapping("/search")
     public ResponseEntity<List<StudentDTO>> getByName(@RequestParam String name){
         List<StudentDTO> students = studentsService.getByName(name);
@@ -51,16 +72,34 @@ public class StudentsController {
         return ResponseEntity.ok(students);
     }
 
+
+    @Operation(summary = "Save student", description = "Saves a new student.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Created"),
+        @ApiResponse(responseCode = "409", description = "Conflict", content = @Content)
+    })
     @PostMapping
     public ResponseEntity<StudentDTO> save(@RequestBody StudentDTO studentDTO){
         return ResponseEntity.ok(studentsService.save(studentDTO));
     }
 
+    @Operation(summary = "Update student", description = "Updates an existing student.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content),
+        @ApiResponse(responseCode = "409", description = "Conflict", content = @Content)
+    })
     @PutMapping("/{id}")
     public ResponseEntity<StudentDTO> update(@PathVariable Long id, @RequestBody StudentDTO studentDTO){
         return ResponseEntity.ok(studentsService.update(id, studentDTO));
     }
 
+
+    @Operation(summary = "Delete student", description = "Deletes an existing student.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "No Content", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         studentsService.delete(id);
