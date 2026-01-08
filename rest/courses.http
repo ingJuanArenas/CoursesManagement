@@ -1,7 +1,7 @@
 ### get all
 
 GET  http://localhost:8080/api/courses
-### get by id
+### get by ids
 GET  http://localhost:8080/api/courses/6
 
 ### get by name
