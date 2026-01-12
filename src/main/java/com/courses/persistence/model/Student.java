@@ -36,8 +36,8 @@ public class Student {
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(name = "is_active")
-    private boolean isActive;
+    @Column(name = "is_active",nullable = false)
+    private boolean active;
 
 
     @OneToMany(mappedBy = "student")
