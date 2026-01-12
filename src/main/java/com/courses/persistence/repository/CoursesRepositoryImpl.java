@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.exceptions.NotFoundException;
-import com.courses.domain.repository.CoursesRepository;
+import com.courses.domain.repository.RepositoryInterface;
 import com.courses.persistence.crud.CoursesCRUD;
 import com.courses.persistence.mapper.CoursesMapper;
 import com.courses.persistence.model.Course;
 
 @Repository
-public class CoursesRepositoryImpl implements CoursesRepository {
+public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO> {
 
     private final CoursesCRUD coursesCRUD;
     private final CoursesMapper coursesMapper;
@@ -41,6 +41,12 @@ public class CoursesRepositoryImpl implements CoursesRepository {
     }
 
     @Override
+    public List<CourseDTO> getActive() {
+       return coursesMapper.toDtos(coursesCRUD.findByActiveTrue());
+    }
+
+
+    @Override
     public CourseDTO save(CourseDTO courseDTO) {
         Course course= coursesMapper.toEntity(courseDTO);
         return coursesMapper.toDto(coursesCRUD.save(course));
@@ -62,6 +68,7 @@ public class CoursesRepositoryImpl implements CoursesRepository {
         coursesMapper.toEntity(getById(id));     
         coursesCRUD.deleteById(id);
     }
+
 
     
     

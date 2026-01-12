@@ -8,4 +8,5 @@ import com.courses.persistence.model.Student;
 
 public interface StudentsCRUD extends ListCrudRepository<Student,Long>{
     List<Student> findAllByNameContainingIgnoreCase(String name);
+    List<Student> findByActiveTrue();
 }

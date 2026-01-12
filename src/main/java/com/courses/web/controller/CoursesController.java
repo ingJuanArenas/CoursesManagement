@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.courses.domain.dtos.CourseDTO;
+import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.service.CoursesService;
 
@@ -74,6 +75,17 @@ public class CoursesController {
         }
 
 
+        return ResponseEntity.ok(courses);
+    }
+
+
+
+      @GetMapping("/active")
+    public ResponseEntity<List<CourseDTO>> getActive (){
+        List<CourseDTO> courses=coursesService.getActive();
+        if (courses.isEmpty()) {
+            throw new NotFoundException("No content found");
+        }
         return ResponseEntity.ok(courses);
     }
 

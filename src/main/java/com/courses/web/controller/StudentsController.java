@@ -67,7 +67,17 @@ public class StudentsController {
     public ResponseEntity<List<StudentDTO>> getByName(@RequestParam String name){
         List<StudentDTO> students = studentsService.getByName(name);
         if (students.isEmpty()) {
-            throw new NotFoundException("No courses found");
+            throw new NotFoundException("No students found");
+        }
+        return ResponseEntity.ok(students);
+    }
+
+
+    @GetMapping("/active")
+    public ResponseEntity<List<StudentDTO>> getActive (){
+        List<StudentDTO> students = studentsService.getActive();
+        if (students.isEmpty()) {
+            throw new NotFoundException("No content found");
         }
         return ResponseEntity.ok(students);
     }

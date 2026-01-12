@@ -28,6 +28,10 @@ public class StudentsService {
         return studentRepository.getByName(name);
     }
 
+    public List<StudentDTO> getActive(){
+        return studentRepository.getActive();
+    }
+
     public StudentDTO save (StudentDTO studentDTO) {
         return studentRepository.save(studentDTO);
     }

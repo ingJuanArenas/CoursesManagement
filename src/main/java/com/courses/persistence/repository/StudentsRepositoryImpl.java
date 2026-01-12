@@ -6,13 +6,13 @@ import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
-import com.courses.domain.repository.StudentsRepository;
+import com.courses.domain.repository.RepositoryInterface;
 import com.courses.persistence.crud.StudentsCRUD;
 import com.courses.persistence.mapper.StudentsMapper;
 import com.courses.persistence.model.Student;
 
 @Repository
-public class StudentsRepositoryImpl  implements StudentsRepository{
+public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
 
     private final StudentsCRUD studentsCRUD;
     private final StudentsMapper studentsMapper;
@@ -40,6 +40,11 @@ public class StudentsRepositoryImpl  implements StudentsRepository{
     }
 
     @Override
+    public List<StudentDTO> getActive() {
+       return studentsMapper.toDtos(studentsCRUD.findByActiveTrue());
+    }
+    
+    @Override
     public StudentDTO save(StudentDTO studentDTO) {
        Student student = studentsMapper.toEntity(studentDTO);
        return studentsMapper.toDto(studentsCRUD.save(student));
@@ -61,6 +66,8 @@ public class StudentsRepositoryImpl  implements StudentsRepository{
        Student student = studentsMapper.toEntity(getById(id));
        studentsCRUD.delete(student);
     }
+
+    
 
     
     
