@@ -29,6 +29,11 @@ public class CoursesService {
         return courseRepository.getByName(name);
     }
 
+    public List<CourseDTO> getActive(){
+        return courseRepository.getActive();
+    }
+
+
     public CourseDTO save (CourseDTO courseDTO) {
         return courseRepository.save(courseDTO);
     }
