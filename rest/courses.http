@@ -2,11 +2,14 @@
 
 GET  http://localhost:8080/api/courses
 ### get by ids
-GET  http://localhost:8080/api/courses/6
+GET  http://localhost:8080/api/courses/1
 
 ### get by name
-GET  http://localhost:8080/api/courses/search?name=java
+GET  http://localhost:8080/api/courses/search?name=lega
 
+### get active
+
+GET  http://localhost:8080/api/courses/active
 ### create
 
 POST  http://localhost:8080/api/courses
@@ -14,19 +17,23 @@ Content-Type: application/json
 
 {
     "name": "Go for Hacking",
-    "description": "Go programming language for hacking"
+    "description": "Go programming language for hacking",
+    "capacity":15,
+    "active":true
 
 }
 
 
 ###
 
-PUT http://localhost:8080/api/courses/3
+PUT http://localhost:8080/api/courses/1
 Content-Type: application/json
 
 {
     "name": "Java Basics",
-    "description": "Java for begginers"
+    "description": "Java for begginers",
+    "capacity":20,
+    "active":true
 
 }
 
