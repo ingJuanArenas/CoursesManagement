@@ -1,7 +1,9 @@
 package com.courses.domain.dtos;
 
+import com.courses.persistence.model.EnrollmentStatus;
+
 public record EnrollmentDTO(
-    String status,
+    EnrollmentStatus status,
     Long courseId,
     Long studentId
 ) {} 
