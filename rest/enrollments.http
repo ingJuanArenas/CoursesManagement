@@ -1,27 +1,22 @@
 ### get all
 GET  http://localhost:8080/api/enrollments
 ### get by ids
-GET  http://localhost:8080/api/enrollments/4
+GET  http://localhost:8080/api/enrollments/1
 
 ### save
 POST http://localhost:8080/api/enrollments
 Content-Type: application/json
+
 {
-  "status": "ENROLLED",
-  "courseId": 6,
-  "studentId": 1
+  "courseId":4,
+  "studentId":2
 }
-
-
-
 ### update
-PUT http://localhost:8080/api/enrollments/1
+PUT http://localhost:8080/api/enrollments/2
 Content-Type: application/json
 
 {
-    "status": "COMPLETED",
-    "studentId": 1,
-    "courseId":6
+    "status": "COMPLETED"
 }
 
 

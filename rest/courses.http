@@ -2,7 +2,7 @@
 
 GET  http://localhost:8080/api/courses
 ### get by ids
-GET  http://localhost:8080/api/courses/1
+GET  http://localhost:8080/api/courses/8
 
 ### get by name
 GET  http://localhost:8080/api/courses/search?name=lega
@@ -16,9 +16,9 @@ POST  http://localhost:8080/api/courses
 Content-Type: application/json
 
 {
-    "name": "Go for Hacking",
-    "description": "Go programming language for hacking",
-    "capacity":15,
+    "name": "Rust for Hacking Extreme",
+    "description": "Rust programming language for hacking",
+    "capacity":1,
     "active":true
 
 }
