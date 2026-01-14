@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.EnrollmentDTO;
+import com.courses.domain.exceptions.AlreadyExistsException;
+import com.courses.domain.exceptions.EnrollmentNotAvaliableException;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.repository.EnrollmentsRepositoryInterface;
+import com.courses.persistence.crud.CoursesCRUD;
 import com.courses.persistence.crud.EnrollmentsCRUD;
+import com.courses.persistence.crud.StudentsCRUD;
 import com.courses.persistence.mapper.EnrollmentsMapper;
 import com.courses.persistence.model.Enrollment;
 import com.courses.persistence.model.EnrollmentStatus;
@@ -18,14 +22,19 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
 
     private final EnrollmentsCRUD enrollmentsCRUD;
+    private final CoursesCRUD coursesCRUD;
+    private final StudentsCRUD studentsCRUD;
     private final EnrollmentsMapper enrollmentsMapper;
 
     
-
-    public EnrollmentsRepositoryImpl(EnrollmentsCRUD enrollmentsCRUD, EnrollmentsMapper enrollmentsMapper) {
+    public EnrollmentsRepositoryImpl(EnrollmentsCRUD enrollmentsCRUD, CoursesCRUD coursesCRUD, StudentsCRUD studentsCRUD, EnrollmentsMapper enrollmentsMapper) {
         this.enrollmentsCRUD = enrollmentsCRUD;
+        this.coursesCRUD = coursesCRUD;
+        this.studentsCRUD = studentsCRUD;
         this.enrollmentsMapper = enrollmentsMapper;
+
     }
+
 
     @Override
     public List<EnrollmentDTO> getAll() {
@@ -42,8 +51,31 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     @Override
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO) {
 
+        var course = this.coursesCRUD.findById(enrollmentDTO.courseId()).orElseThrow(()-> new NotFoundException("Course Not Found"));
+        var student = this.studentsCRUD.findById(enrollmentDTO.studentId()).orElseThrow(()-> new NotFoundException("Student Not Found"));
+
+        //verify capacity
+        if (course.getCapacity() == 0) {
+            throw new EnrollmentNotAvaliableException("Course has reached its limit");
+        }
+
+        //avoid duplicity
+        course.getEnrollments().stream().forEach(e -> {
+            if(e.getStudentId() == student.getId()){
+                throw new AlreadyExistsException("Student already enrolled in this course");
+            }
+        });
+
+
+        // verify active status
+        if(course.isActive() == false || student.isActive() == false){
+            throw new EnrollmentNotAvaliableException("Course or Student is not active");
+        }
+        
         Enrollment enrollment = enrollmentsMapper.toEntity(enrollmentDTO);
+        enrollment.setStatus(EnrollmentStatus.ENROLLED);
         enrollment.setEnrollmentDate(LocalDate.now());
+        course.setCapacity(course.getCapacity()-1);
 
         return enrollmentsMapper.toDto(enrollmentsCRUD.save(enrollment));
         
@@ -54,7 +86,8 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
         Enrollment enrollment = enrollmentsCRUD.findById(id).orElseThrow(
             () -> new NotFoundException("Enrollment not found with id: " + id)
         );
-        enrollmentsMapper.updateEntityFromDto(enrollment, enrollmentDTO);
+        enrollment.setEnrollmentDate(LocalDate.now());
+        enrollment.setStatus(enrollmentDTO.status());
         return enrollmentsMapper.toDto(enrollmentsCRUD.save(enrollment));
     }
 
