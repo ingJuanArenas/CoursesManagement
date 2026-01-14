@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.persistence.model.Enrollment;
@@ -18,9 +17,9 @@ public interface EnrollmentsMapper {
     // 🔥 ESTOS SON LOS IMPORTANTES
     @Mapping(target = "courseId", source = "courseId")
     @Mapping(target = "studentId", source = "studentId")
-    @Mapping(target = "status", source = "status")
 
     // relaciones se ignoran
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "course", ignore = true)
     @Mapping(target = "student", ignore = true)
 
@@ -29,5 +28,4 @@ public interface EnrollmentsMapper {
     EnrollmentDTO toDto(Enrollment enrollment);
     List<EnrollmentDTO> toDtos(List<Enrollment> enrollments);
 
-    void updateEntityFromDto(Enrollment enrollment, @MappingTarget EnrollmentDTO enrollmentDTO);
 }
