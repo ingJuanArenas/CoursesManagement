@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import com.courses.domain.exceptions.AlreadyExistsException;
+import com.courses.domain.exceptions.EnrollmentNotAvaliableException;
 import com.courses.domain.exceptions.NotFoundException;
 
 @RestControllerAdvice
@@ -16,6 +18,19 @@ public class ExceptionsHandler {
     public ResponseEntity<Error> handleNotFoundException(NotFoundException e) {
         Error error = new Error("Not Found", e.toString());
         return ResponseEntity.status(404).body(error);
+    }
+
+
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<Error> handleAlreadyExistsException(AlreadyExistsException e) {
+        Error error = new Error("Already Exists", e.toString());
+        return ResponseEntity.status(409).body(error);
+    }
+
+    @ExceptionHandler(EnrollmentNotAvaliableException.class)
+    public ResponseEntity<Error> handleEnrollmentNotAvaliableException(EnrollmentNotAvaliableException e) {
+        Error error = new Error("Enrollment Not Avaliable", e.toString());
+        return ResponseEntity.status(400).body(error);
     }
 
      @ExceptionHandler(NoResourceFoundException.class)
