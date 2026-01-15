@@ -2,11 +2,14 @@ package com.courses.domain.dtos;
 
 
 
+import java.util.List;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Student DTO")
 public record StudentDTO(
     String name, 
     String email,
-    boolean active
+    boolean active,
+    List<EnrollmentDTO> enrollments
 ) {}
