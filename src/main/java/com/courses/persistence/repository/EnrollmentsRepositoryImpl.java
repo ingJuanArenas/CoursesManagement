@@ -14,8 +14,10 @@ import com.courses.persistence.crud.CoursesCRUD;
 import com.courses.persistence.crud.EnrollmentsCRUD;
 import com.courses.persistence.crud.StudentsCRUD;
 import com.courses.persistence.mapper.EnrollmentsMapper;
+import com.courses.persistence.model.Course;
 import com.courses.persistence.model.Enrollment;
 import com.courses.persistence.model.EnrollmentStatus;
+import com.courses.persistence.model.Student;
 
 @Repository
 public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface {
@@ -86,8 +88,20 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
         Enrollment enrollment = enrollmentsCRUD.findById(id).orElseThrow(
             () -> new NotFoundException("Enrollment not found with id: " + id)
         );
+        Course course = this.coursesCRUD.findById(enrollmentDTO.courseId()).orElseThrow(()-> new NotFoundException("Course Not Found"));
+        
+        if(course.getEnrollments().contains(enrollment)){
+           
         enrollment.setEnrollmentDate(LocalDate.now());
         enrollment.setStatus(enrollmentDTO.status());
+            if(enrollmentDTO.status().equals(EnrollmentStatus.CANCELLED)){
+                course.setCapacity(course.getCapacity()+1);
+            }
+           
+        }else{
+            throw new NotFoundException("Student is not enrolled in this course");
+        }
+        
         return enrollmentsMapper.toDto(enrollmentsCRUD.save(enrollment));
     }
 
