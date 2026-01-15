@@ -2,7 +2,7 @@
 
 GET  http://localhost:8080/api/courses
 ### get by ids
-GET  http://localhost:8080/api/courses/8
+GET  http://localhost:8080/api/courses/5
 
 ### get by name
 GET  http://localhost:8080/api/courses/search?name=lega
