@@ -8,7 +8,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.courses.domain.exceptions.AlreadyExistsException;
-import com.courses.domain.exceptions.EnrollmentNotAvaliableException;
+import com.courses.domain.exceptions.EnrollmentOperationNotAvaliableException;
 import com.courses.domain.exceptions.NotFoundException;
 
 @RestControllerAdvice
@@ -27,9 +27,9 @@ public class ExceptionsHandler {
         return ResponseEntity.status(409).body(error);
     }
 
-    @ExceptionHandler(EnrollmentNotAvaliableException.class)
-    public ResponseEntity<Error> handleEnrollmentNotAvaliableException(EnrollmentNotAvaliableException e) {
-        Error error = new Error("Enrollment Not Avaliable", e.toString());
+    @ExceptionHandler(EnrollmentOperationNotAvaliableException.class)
+    public ResponseEntity<Error> handleEnrollmentOperationNotAvaliableException(EnrollmentOperationNotAvaliableException e) {
+        Error error = new Error("Enrollment Operation Not Avaliable", e.toString());
         return ResponseEntity.status(400).body(error);
     }
 

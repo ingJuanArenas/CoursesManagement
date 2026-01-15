@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.domain.exceptions.AlreadyExistsException;
-import com.courses.domain.exceptions.EnrollmentNotAvaliableException;
+import com.courses.domain.exceptions.EnrollmentOperationNotAvaliableException;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.repository.EnrollmentsRepositoryInterface;
 import com.courses.persistence.crud.CoursesCRUD;
@@ -58,7 +58,7 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
         //verify capacity
         if (course.getCapacity() == 0) {
-            throw new EnrollmentNotAvaliableException("Course has reached its limit");
+            throw new EnrollmentOperationNotAvaliableException("Course has reached its limit");
         }
 
         //avoid duplicity
@@ -71,7 +71,7 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
         // verify active status
         if(course.isActive() == false || student.isActive() == false){
-            throw new EnrollmentNotAvaliableException("Course or Student is not active");
+            throw new EnrollmentOperationNotAvaliableException("Course or Student is not active");
         }
         
         Enrollment enrollment = enrollmentsMapper.toEntity(enrollmentDTO);
@@ -107,7 +107,12 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
     @Override
     public void delete(Long id) {
-        enrollmentsCRUD.deleteById(id);
+       Enrollment enrollment = enrollmentsCRUD.findById(id).orElseThrow(()-> new NotFoundException("Enrollment not found with id: " + id ));
+       if (enrollment.getStatus().equals(EnrollmentStatus.ENROLLED)){
+        throw new EnrollmentOperationNotAvaliableException("To delete an enrollment its status must be CANCELLED OR COMPLETE");
+       }
+       enrollmentsCRUD.delete(enrollment);
+        
     }
     
 }

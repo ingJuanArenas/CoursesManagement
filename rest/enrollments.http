@@ -12,7 +12,7 @@ Content-Type: application/json
   "studentId":2
 }
 ### update
-PUT http://localhost:8080/api/enrollments/18
+PUT http://localhost:8080/api/enrollments/19
 Content-Type: application/json
 
 {
@@ -24,4 +24,4 @@ Content-Type: application/json
 
 
 ### delete
-DELETE http://localhost:8080/api/enrollments/6
+DELETE http://localhost:8080/api/enrollments/18
