@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.repository.RepositoryInterface;
@@ -16,10 +17,12 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
 
     private final StudentsCRUD studentsCRUD;
     private final StudentsMapper studentsMapper;
-
-    public StudentsRepositoryImpl(StudentsCRUD studentsCRUD, StudentsMapper studentsMapper) {
+    private final EnrollmentsRepositoryImpl enrollmentsRepositoryImpl;
+    
+   public StudentsRepositoryImpl(StudentsCRUD studentsCRUD, StudentsMapper studentsMapper, EnrollmentsRepositoryImpl enrollmentsRepositoryImpl) {
         this.studentsCRUD = studentsCRUD;
         this.studentsMapper = studentsMapper;
+        this.enrollmentsRepositoryImpl = enrollmentsRepositoryImpl;
     }
 
     @Override
@@ -43,6 +46,11 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
     public List<StudentDTO> getActive() {
        return studentsMapper.toDtos(studentsCRUD.findByActiveTrue());
     }
+
+   public List<CourseDTO> getCoursesByStudentId(Long id){
+      return enrollmentsRepositoryImpl.getCoursesByStudentId(id);
+    }
+
     
     @Override
     public StudentDTO save(StudentDTO studentDTO) {

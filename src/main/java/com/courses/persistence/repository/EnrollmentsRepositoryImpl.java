@@ -1,11 +1,14 @@
 package com.courses.persistence.repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.dtos.EnrollmentDTO;
+import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.AlreadyExistsException;
 import com.courses.domain.exceptions.EnrollmentOperationNotAvaliableException;
 import com.courses.domain.exceptions.NotFoundException;
@@ -13,7 +16,9 @@ import com.courses.domain.repository.EnrollmentsRepositoryInterface;
 import com.courses.persistence.crud.CoursesCRUD;
 import com.courses.persistence.crud.EnrollmentsCRUD;
 import com.courses.persistence.crud.StudentsCRUD;
+import com.courses.persistence.mapper.CoursesMapper;
 import com.courses.persistence.mapper.EnrollmentsMapper;
+import com.courses.persistence.mapper.StudentsMapper;
 import com.courses.persistence.model.Course;
 import com.courses.persistence.model.Enrollment;
 import com.courses.persistence.model.EnrollmentStatus;
@@ -27,14 +32,17 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     private final CoursesCRUD coursesCRUD;
     private final StudentsCRUD studentsCRUD;
     private final EnrollmentsMapper enrollmentsMapper;
+    private final StudentsMapper studentsMapper;
+    private final CoursesMapper coursesMapper;
 
     
-    public EnrollmentsRepositoryImpl(EnrollmentsCRUD enrollmentsCRUD, CoursesCRUD coursesCRUD, StudentsCRUD studentsCRUD, EnrollmentsMapper enrollmentsMapper) {
+    public EnrollmentsRepositoryImpl(EnrollmentsCRUD enrollmentsCRUD, CoursesCRUD coursesCRUD, StudentsCRUD studentsCRUD, EnrollmentsMapper enrollmentsMapper, StudentsMapper studentsMapper, CoursesMapper coursesMapper) {
         this.enrollmentsCRUD = enrollmentsCRUD;
         this.coursesCRUD = coursesCRUD;
         this.studentsCRUD = studentsCRUD;
         this.enrollmentsMapper = enrollmentsMapper;
-
+        this.studentsMapper = studentsMapper;
+        this.coursesMapper = coursesMapper;
     }
 
 
@@ -48,6 +56,29 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
        return enrollmentsMapper.toDto(enrollmentsCRUD.findById(id).orElseThrow(
         () -> new NotFoundException("Enrollment not found with id: " + id)
        ));
+    }
+
+
+    public List<CourseDTO> getCoursesByStudentId(Long id){
+        Student student = studentsCRUD.findById(id).orElseThrow(()-> new NotFoundException("Student Not Found"));
+        List<Course> courses = new ArrayList<>();
+        student.getEnrollments().forEach(e-> {
+            Course course = coursesCRUD.findById(e.getCourseId()).orElseThrow(()-> new NotFoundException("Course Not Found"));
+            courses.add(course);
+        });
+
+        return coursesMapper.toDtos(courses);
+    }
+
+    public List<StudentDTO> getStudentsByCourseId(Long id){
+        Course course = coursesCRUD.findById(id).orElseThrow(()-> new NotFoundException("Course Not Found"));
+        List<Student> students = new ArrayList<>();
+        course.getEnrollments().forEach(e-> {
+            Student student = studentsCRUD.findById(e.getStudentId()).orElseThrow(()-> new NotFoundException("Student not Found"));
+            students.add(student);
+        });
+
+        return studentsMapper.toDtos(students);
     }
 
     @Override
