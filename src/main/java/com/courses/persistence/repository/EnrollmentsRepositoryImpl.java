@@ -60,23 +60,14 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
 
     public List<CourseDTO> getCoursesByStudentId(Long id){
-        Student student = studentsCRUD.findById(id).orElseThrow(()-> new NotFoundException("Student Not Found"));
-        List<Course> courses = new ArrayList<>();
-        student.getEnrollments().forEach(e-> {
-            Course course = coursesCRUD.findById(e.getCourseId()).orElseThrow(()-> new NotFoundException("Course Not Found"));
-            courses.add(course);
-        });
-
+        List<Long> courseIds = enrollmentsCRUD.findCourseIdsByStudentId(id);
+        List<Course> courses = coursesCRUD.findAllById(courseIds);
         return coursesMapper.toDtos(courses);
     }
 
     public List<StudentDTO> getStudentsByCourseId(Long id){
-        Course course = coursesCRUD.findById(id).orElseThrow(()-> new NotFoundException("Course Not Found"));
-        List<Student> students = new ArrayList<>();
-        course.getEnrollments().forEach(e-> {
-            Student student = studentsCRUD.findById(e.getStudentId()).orElseThrow(()-> new NotFoundException("Student not Found"));
-            students.add(student);
-        });
+        List<Long> studentIds= enrollmentsCRUD.findStudentIdsByCourseId(id);
+        List<Student> students = studentsCRUD.findAllById(studentIds);
 
         return studentsMapper.toDtos(students);
     }

@@ -13,7 +13,7 @@ GET  http://localhost:8080/api/courses/active
 
 ### get students by course id
 
-GET  http://localhost:8080/api/courses/6/students
+GET  http://localhost:8080/api/courses/1/students
 ### create
 
 POST  http://localhost:8080/api/courses
