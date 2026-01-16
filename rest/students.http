@@ -11,6 +11,10 @@ GET  http://localhost:8080/api/students/search?name=Ana
 ### get active
 
 GET  http://localhost:8080/api/students/active
+
+### get courses by student id
+
+GET   http://localhost:8080/api/students/5/courses
 ### create
 
 POST  http://localhost:8080/api/students
