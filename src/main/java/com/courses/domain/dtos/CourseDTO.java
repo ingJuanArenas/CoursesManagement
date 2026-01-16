@@ -11,6 +11,5 @@ public record CourseDTO(
      String name,
      String description,
      int capacity,
-     boolean active,
-     List<EnrollmentDTO> enrollments
+     boolean active
 ) {}
