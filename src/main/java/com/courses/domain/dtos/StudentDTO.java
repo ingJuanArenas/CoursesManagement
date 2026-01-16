@@ -10,6 +10,5 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record StudentDTO(
     String name, 
     String email,
-    boolean active,
-    List<EnrollmentDTO> enrollments
+    boolean active
 ) {}

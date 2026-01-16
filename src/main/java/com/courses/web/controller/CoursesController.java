@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.courses.domain.dtos.CourseDTO;
+import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.service.CoursesService;
 
@@ -88,6 +89,15 @@ public class CoursesController {
         return ResponseEntity.ok(courses);
     }
 
+
+    @GetMapping("/{id}/students")
+    public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable Long id){
+        List<StudentDTO> students = coursesService.getStudentsByCourseId(id);
+        if (students.isEmpty()) {
+            throw new NotFoundException("No students found for this course");
+        }
+        return ResponseEntity.ok(students);
+    }
 
     @Operation(summary = "Save a new course", description = "Saves a new course.")
         @ApiResponses({

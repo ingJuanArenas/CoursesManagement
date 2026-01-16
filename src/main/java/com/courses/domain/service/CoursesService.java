@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.CourseDTO;
+import com.courses.domain.dtos.StudentDTO;
 import com.courses.persistence.repository.CoursesRepositoryImpl;
 
 @Service
@@ -33,6 +34,9 @@ public class CoursesService {
         return courseRepository.getActive();
     }
 
+    public List<StudentDTO> getStudentsByCourseId(Long id){
+        return courseRepository.getStudentsByCourseId(id);
+    }
 
     public CourseDTO save (CourseDTO courseDTO) {
         return courseRepository.save(courseDTO);
