@@ -79,6 +79,11 @@ public class CoursesController {
     }
 
 
+    @Operation(summary = "Get all active courses", description = "Returns a list of active courses.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
 
       @GetMapping("/active")
     public ResponseEntity<List<CourseDTO>> getActive (){
@@ -90,6 +95,11 @@ public class CoursesController {
     }
 
 
+    @Operation(summary = "Get all students enrollment in a course", description = "Returns a list of students enrollment in a course.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @GetMapping("/{id}/students")
     public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable Long id){
         List<StudentDTO> students = coursesService.getStudentsByCourseId(id);
