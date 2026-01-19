@@ -1,5 +1,6 @@
 package com.courses.web.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.courses.domain.dtos.EnrollmentDTO;
@@ -42,6 +44,16 @@ public class EnrollmentsController {
     public ResponseEntity<EnrollmentDTO> getById(@PathVariable Long id){
         EnrollmentDTO enrollment = enrollmentsService.getById(id);
         return ResponseEntity.ok(enrollment);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<EnrollmentDTO>> getAllByDate(@RequestParam("date")LocalDate date){
+        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByDate(date);
+        if (enrollments.isEmpty()) {
+            throw new NotFoundException("No contents found");
+        }
+
+        return ResponseEntity.ok(enrollments);
     }
 
     @PostMapping

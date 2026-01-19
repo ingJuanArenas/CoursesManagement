@@ -1,5 +1,6 @@
 package com.courses.persistence.crud;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,6 @@ public interface EnrollmentsCRUD extends ListCrudRepository<Enrollment,Long> {
 
     @Query("SELECT e.studentId FROM Enrollment e WHERE e.courseId = :id")
     List<Long> findStudentIdsByCourseId(Long id);
+
+    List<Enrollment> findAllByEnrollmentDate(LocalDate date);
 }
