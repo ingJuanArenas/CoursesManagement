@@ -1,5 +1,6 @@
 package com.courses.domain.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class EnrollmentsService {
         return enrollmentsRepository.getById(id);
     }
 
+    public List<EnrollmentDTO> getAllByDate(LocalDate date){
+        return enrollmentsRepository.getAllByDate(date);
+    }
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO){
         return enrollmentsRepository.save(enrollmentDTO);
     }

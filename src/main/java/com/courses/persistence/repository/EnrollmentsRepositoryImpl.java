@@ -1,7 +1,6 @@
 package com.courses.persistence.repository;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -72,6 +71,8 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
         return studentsMapper.toDtos(students);
     }
 
+    
+
     @Override
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO) {
 
@@ -135,6 +136,12 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
        }
        enrollmentsCRUD.delete(enrollment);
         
+    }
+
+
+    @Override
+    public List<EnrollmentDTO> getAllByDate(LocalDate date) {
+        return enrollmentsMapper.toDtos(enrollmentsCRUD.findAllByEnrollmentDate(date));
     }
     
 }
