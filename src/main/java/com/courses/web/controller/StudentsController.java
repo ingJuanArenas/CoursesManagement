@@ -74,6 +74,11 @@ public class StudentsController {
     }
 
 
+    @Operation(summary = "Get active students", description = "Returns active students.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @GetMapping("/active")
     public ResponseEntity<List<StudentDTO>> getActive (){
         List<StudentDTO> students = studentsService.getActive();
@@ -84,6 +89,12 @@ public class StudentsController {
     }
 
 
+
+    @Operation(summary = "Get courses by student id", description = "Returns courses by student id.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
     @GetMapping("/{id}/courses")
     public ResponseEntity<List<CourseDTO>> getCoursesByStudentId(@PathVariable Long id){
         List<CourseDTO> courses = studentsService.getCoursesByStudentId(id);

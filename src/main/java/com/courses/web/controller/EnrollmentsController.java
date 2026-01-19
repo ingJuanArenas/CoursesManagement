@@ -18,6 +18,11 @@ import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.service.EnrollmentsService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 
 @RestController
 @RequestMapping("/api/enrollments")
@@ -30,6 +35,11 @@ public class EnrollmentsController {
     }
 
 
+    @Operation(summary = "Get all enrollments", description = "Returns a list of all enrollments.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @GetMapping
     public ResponseEntity<List<EnrollmentDTO>> getAll(){
         List<EnrollmentDTO> enrollments = enrollmentsService.getAll();
@@ -40,12 +50,23 @@ public class EnrollmentsController {
          return ResponseEntity.ok(enrollments);
     }
     
+
+    @Operation(summary = "Get enrollment by id", description = "Returns an enrollment by its id.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @GetMapping("/{id}")
     public ResponseEntity<EnrollmentDTO> getById(@PathVariable Long id){
         EnrollmentDTO enrollment = enrollmentsService.getById(id);
         return ResponseEntity.ok(enrollment);
     }
 
+    @Operation(summary = "Search enrollments by date", description = "Returns a list of enrollments by their date.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @GetMapping("/search")
     public ResponseEntity<List<EnrollmentDTO>> getAllByDate(@RequestParam("date")LocalDate date){
         List<EnrollmentDTO> enrollments = enrollmentsService.getAllByDate(date);
@@ -56,18 +77,34 @@ public class EnrollmentsController {
         return ResponseEntity.ok(enrollments);
     }
 
+    @Operation(summary = "Save enrollment", description = "Saves a new enrollment.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "201", description = "Created"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @PostMapping
     public ResponseEntity<EnrollmentDTO> save(@RequestBody EnrollmentDTO enrollmentDTO){
         EnrollmentDTO addedEnrollment = enrollmentsService.save(enrollmentDTO);
         return ResponseEntity.ok(addedEnrollment);
     }
 
+    @Operation(summary = "Update enrollment", description = "Updates an existing enrollment.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @PutMapping("/{id}")
     public ResponseEntity<EnrollmentDTO> update (@PathVariable Long id, @RequestBody EnrollmentDTO enrollmentDTO){
         EnrollmentDTO updatedEnrollment = enrollmentsService.update(id, enrollmentDTO);
         return ResponseEntity.ok(updatedEnrollment);
     }
 
+
+    @Operation(summary = "Delete enrollment", description = "Deletes an existing enrollment.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "204", description = "No Content"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         enrollmentsService.delete(id);
