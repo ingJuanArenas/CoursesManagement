@@ -6,15 +6,20 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
 
+import com.courses.persistence.model.Course;
 import com.courses.persistence.model.Enrollment;
+import com.courses.persistence.model.Student;
 
 public interface EnrollmentsCRUD extends ListCrudRepository<Enrollment,Long> {
 
-    @Query("SELECT e.courseId FROM Enrollment e WHERE e.studentId = :id")
-    List<Long> findCourseIdsByStudentId(Long id);
 
-    @Query("SELECT e.studentId FROM Enrollment e WHERE e.courseId = :id")
-    List<Long> findStudentIdsByCourseId(Long id);
+
+    @Query("SELECT DISTINCT c FROM Course c JOIN FETCH Enrollment e ON c.id = e.courseId WHERE e.studentId = :id")
+    List<Course> findCoursesByStudentId(Long id);
+
+    @Query("SELECT DISTINCT s FROM Student s JOIN FETCH Enrollment e ON s.id= e.studentId WHERE e.courseId = :id")
+    List<Student> findStudentsByCourseId(Long id);
+
 
     List<Enrollment> findAllByEnrollmentDate(LocalDate date);
 }
