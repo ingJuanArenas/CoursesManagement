@@ -59,14 +59,12 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
 
     public List<CourseDTO> getCoursesByStudentId(Long id){
-        List<Long> courseIds = enrollmentsCRUD.findCourseIdsByStudentId(id);
-        List<Course> courses = coursesCRUD.findAllById(courseIds);
+        List<Course> courses = enrollmentsCRUD.findCoursesByStudentId(id);
         return coursesMapper.toDtos(courses);
     }
 
     public List<StudentDTO> getStudentsByCourseId(Long id){
-        List<Long> studentIds= enrollmentsCRUD.findStudentIdsByCourseId(id);
-        List<Student> students = studentsCRUD.findAllById(studentIds);
+        List<Student> students = enrollmentsCRUD.findStudentsByCourseId(id);
 
         return studentsMapper.toDtos(students);
     }

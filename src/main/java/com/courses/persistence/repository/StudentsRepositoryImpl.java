@@ -75,8 +75,10 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
 
     @Override
     public void delete(Long id) {
-       Student student = studentsMapper.toEntity(getById(id));
-       studentsCRUD.delete(student);
+         if (!studentsCRUD.existsById(id)) {
+            throw new NotFoundException("Student not found with id: " + id);
+         }
+         studentsCRUD.deleteById(id);
     }
 
     
