@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.dtos.StudentDTO;
+import com.courses.domain.projections.CoursesSummary;
+import com.courses.domain.projections.StudentsSummary;
 import com.courses.persistence.repository.StudentsRepositoryImpl;
 
 @Service
@@ -17,7 +19,7 @@ public class StudentsService {
         this.studentRepository = studentRepository;
     }
 
-    public List<StudentDTO> getAll() {
+    public List<StudentsSummary> getAll() {
         return studentRepository.getAll();
     }
 
@@ -29,11 +31,8 @@ public class StudentsService {
         return studentRepository.getByName(name);
     }
 
-    public List<StudentDTO> getActive(){
-        return studentRepository.getActive();
-    }
 
-    public List<CourseDTO> getCoursesByStudentId(Long id){
+    public List<CoursesSummary> getCoursesByStudentId(Long id){
         return studentRepository.getCoursesByStudentId(id);
     }
 

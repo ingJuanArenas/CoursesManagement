@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
+import com.courses.domain.projections.CoursesSummary;
+import com.courses.domain.projections.StudentsSummary;
 import com.courses.domain.service.CoursesService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -35,14 +37,14 @@ public class CoursesController {
     }
 
 
-    @Operation(summary = "Get all courses", description = "Returns a list of all courses.")
+    @Operation(summary = "Get all active courses", description = "Returns a list of all active courses.")
     @ApiResponses({
         @ApiResponse(responseCode = "200", description = "Success"),
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping
-    public ResponseEntity<List<CourseDTO>> getAll(){
-        List<CourseDTO> courses = coursesService.getAll();
+    public ResponseEntity<List<CoursesSummary>> getAll(){
+        List<CoursesSummary> courses = coursesService.getAll();
         if (courses.isEmpty()) {
             throw new NotFoundException("No contents found");
         }
@@ -79,21 +81,6 @@ public class CoursesController {
     }
 
 
-    @Operation(summary = "Get all active courses", description = "Returns a list of active courses.")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Success"),
-        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
-    })
-
-      @GetMapping("/active")
-    public ResponseEntity<List<CourseDTO>> getActive (){
-        List<CourseDTO> courses=coursesService.getActive();
-        if (courses.isEmpty()) {
-            throw new NotFoundException("No content found");
-        }
-        return ResponseEntity.ok(courses);
-    }
-
 
     @Operation(summary = "Get all students enrollment in a course", description = "Returns a list of students enrollment in a course.")
     @ApiResponses({
@@ -101,8 +88,8 @@ public class CoursesController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/{id}/students")
-    public ResponseEntity<List<StudentDTO>> getStudentsByCourseId(@PathVariable Long id){
-        List<StudentDTO> students = coursesService.getStudentsByCourseId(id);
+    public ResponseEntity<List<StudentsSummary>> getStudentsByCourseId(@PathVariable Long id){
+        List<StudentsSummary> students = coursesService.getStudentsByCourseId(id);
         if (students.isEmpty()) {
             throw new NotFoundException("No students found for this course");
         }
