@@ -4,16 +4,17 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
+import com.courses.domain.projections.CoursesSummary;
+import com.courses.domain.projections.StudentsSummary;
 import com.courses.domain.repository.RepositoryInterface;
 import com.courses.persistence.crud.StudentsCRUD;
 import com.courses.persistence.mapper.StudentsMapper;
 import com.courses.persistence.model.Student;
 
 @Repository
-public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
+public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,StudentsSummary>{
 
     private final StudentsCRUD studentsCRUD;
     private final StudentsMapper studentsMapper;
@@ -30,9 +31,9 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
    }
 
     @Override
-    public List<StudentDTO> getAll() {
-       return studentsMapper.toDtos(studentsCRUD.findAll());
-    }
+    public List<StudentsSummary> getAll() {
+      return studentsCRUD.findAllByActiveTrue();
+   }
 
     @Override
     public StudentDTO getById(Long id) {
@@ -46,12 +47,8 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
        return studentsMapper.toDtos(studentsCRUD.findAllByNameContainingIgnoreCase(name));
     }
 
-    @Override
-    public List<StudentDTO> getActive() {
-       return studentsMapper.toDtos(studentsCRUD.findByActiveTrue());
-    }
 
-   public List<CourseDTO> getCoursesByStudentId(Long id){
+   public List<CoursesSummary> getCoursesByStudentId(Long id){
       return enrollmentsRepositoryImpl.getCoursesByStudentId(id);
     }
 
@@ -78,7 +75,10 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO>{
          if (!studentsCRUD.existsById(id)) {
             throw new NotFoundException("Student not found with id: " + id);
          }
-         studentsCRUD.deleteById(id);
+         //Soft delete
+         Student student = studentsMapper.toEntity(getById(id));
+         student.setActive(false);
+         studentsCRUD.save(student);
     }
 
     

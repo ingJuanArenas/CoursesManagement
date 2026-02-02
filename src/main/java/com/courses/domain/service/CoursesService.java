@@ -5,7 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.CourseDTO;
-import com.courses.domain.dtos.StudentDTO;
+import com.courses.domain.projections.CoursesSummary;
+import com.courses.domain.projections.StudentsSummary;
 import com.courses.persistence.repository.CoursesRepositoryImpl;
 
 @Service
@@ -18,7 +19,7 @@ public class CoursesService {
         this.courseRepository = courseRepository;
     }
 
-    public List<CourseDTO> getAll() {
+    public List<CoursesSummary> getAll() {
         return courseRepository.getAll();
     }
 
@@ -30,11 +31,8 @@ public class CoursesService {
         return courseRepository.getByName(name);
     }
 
-    public List<CourseDTO> getActive(){
-        return courseRepository.getActive();
-    }
 
-    public List<StudentDTO> getStudentsByCourseId(Long id){
+    public List<StudentsSummary> getStudentsByCourseId(Long id){
         return courseRepository.getStudentsByCourseId(id);
     }
 

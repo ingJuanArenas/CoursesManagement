@@ -1,7 +1,7 @@
 ### get all
 GET  http://localhost:8080/api/enrollments
 ### get by ids
-GET  http://localhost:8080/api/enrollments/18
+GET  http://localhost:8080/api/enrollments/17
 
 ### get By date
 GET  http://localhost:8080/api/enrollments/search?date=2026-01-15
