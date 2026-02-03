@@ -5,6 +5,13 @@ GET  http://localhost:8080/api/enrollments/17
 
 ### get By date
 GET  http://localhost:8080/api/enrollments/search?date=2026-01-15
+
+### get by student id
+GET  http://localhost:8080/api/enrollments/student?studentId=4
+### get by course id
+GET  http://localhost:8080/api/enrollments/course?courseId=2
+### GET BY STATUS
+GET  http://localhost:8080/api/enrollments/status?status=COMPLETED
 ### save
 POST http://localhost:8080/api/enrollments
 Content-Type: application/json
