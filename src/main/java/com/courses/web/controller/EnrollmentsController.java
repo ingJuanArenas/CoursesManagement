@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.service.EnrollmentsService;
+import com.courses.persistence.model.EnrollmentStatus;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -74,6 +75,49 @@ public class EnrollmentsController {
             throw new NotFoundException("No contents found");
         }
 
+        return ResponseEntity.ok(enrollments);
+    }
+
+    @Operation(summary = "Search enrollments by status", description = "Returns a list of enrollments by their status.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
+    @GetMapping("/status")
+    public ResponseEntity<List<EnrollmentDTO>> getAllByStatus(@RequestParam("status")EnrollmentStatus status){
+        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByStatus(status);
+        if (enrollments.isEmpty()) {
+            throw new NotFoundException("No contents found");
+        }
+
+        return ResponseEntity.ok(enrollments);
+    }
+
+    @Operation(summary = "Search enrollments by course id", description = "Returns a list of enrollments by their course id.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
+    @GetMapping("/course")
+    public ResponseEntity<List<EnrollmentDTO>> getAllByCourseId(@RequestParam("courseId")Long courseId){
+        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByCourseId(courseId);
+        if (enrollments.isEmpty()) {
+            throw new NotFoundException("No contents found");
+        }
+        return ResponseEntity.ok(enrollments);
+    }
+
+    @Operation(summary = "Search enrollments by student id", description = "Returns a list of enrollments by their student id.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
+    })
+    @GetMapping("/student")
+    public ResponseEntity<List<EnrollmentDTO>> getAllByStudentId(@RequestParam("studentId")Long studentId){
+        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByStudentId(studentId);
+        if (enrollments.isEmpty()) {
+            throw new NotFoundException("No contents found");
+        }
         return ResponseEntity.ok(enrollments);
     }
 

@@ -60,6 +60,30 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
         return enrollmentsCRUD.findStudentsByCourseId(id);
     }
 
+
+    
+    @Override
+    public List<EnrollmentDTO> getAllByDate(LocalDate date) {
+        return enrollmentsMapper.toDtos(enrollmentsCRUD.findAllByEnrollmentDate(date));
+    }
+
+
+    @Override
+    public List<EnrollmentDTO> getAllByStatus(EnrollmentStatus status) {
+       return enrollmentsMapper.toDtos(enrollmentsCRUD.findByStatus(status));
+    }
+
+
+    @Override
+    public List<EnrollmentDTO> getAllByCourseId(Long courseId) {
+       return enrollmentsMapper.toDtos(enrollmentsCRUD.findByCourseId(courseId));
+    }
+
+
+    @Override
+    public List<EnrollmentDTO> getAllByStudentId(Long studentId) {
+        return enrollmentsMapper.toDtos(enrollmentsCRUD.findByStudentId(studentId));
+    }
     
 
     @Override
@@ -128,9 +152,5 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     }
 
 
-    @Override
-    public List<EnrollmentDTO> getAllByDate(LocalDate date) {
-        return enrollmentsMapper.toDtos(enrollmentsCRUD.findAllByEnrollmentDate(date));
-    }
     
 }

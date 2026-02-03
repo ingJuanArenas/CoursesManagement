@@ -9,6 +9,7 @@ import org.springframework.data.repository.ListCrudRepository;
 import com.courses.domain.projections.CoursesSummary;
 import com.courses.domain.projections.StudentsSummary;
 import com.courses.persistence.model.Enrollment;
+import com.courses.persistence.model.EnrollmentStatus;
 
 public interface EnrollmentsCRUD extends ListCrudRepository<Enrollment,Long> {
 
@@ -20,6 +21,11 @@ public interface EnrollmentsCRUD extends ListCrudRepository<Enrollment,Long> {
     @Query("SELECT DISTINCT s FROM Student s JOIN FETCH Enrollment e ON s.id= e.studentId WHERE e.courseId = :id")
     List<StudentsSummary> findStudentsByCourseId(Long id);
 
-
     List<Enrollment> findAllByEnrollmentDate(LocalDate date);
+
+    List<Enrollment> findByStatus(EnrollmentStatus status);
+
+    List<Enrollment> findByCourseId(Long courseId);
+
+    List<Enrollment> findByStudentId(Long studentId);
 }

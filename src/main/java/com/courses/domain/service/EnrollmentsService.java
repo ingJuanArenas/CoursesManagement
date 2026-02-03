@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.EnrollmentDTO;
+import com.courses.persistence.model.EnrollmentStatus;
 import com.courses.persistence.repository.EnrollmentsRepositoryImpl;
 
 @Service
@@ -28,6 +29,20 @@ public class EnrollmentsService {
     public List<EnrollmentDTO> getAllByDate(LocalDate date){
         return enrollmentsRepository.getAllByDate(date);
     }
+
+    
+    public List<EnrollmentDTO> getAllByStatus(EnrollmentStatus status) {
+        return enrollmentsRepository.getAllByStatus(status);
+    }
+
+    public List<EnrollmentDTO> getAllByCourseId(Long courseId) {
+        return enrollmentsRepository.getAllByCourseId(courseId);
+    }
+
+    public List<EnrollmentDTO> getAllByStudentId(Long studentId) {
+        return enrollmentsRepository.getAllByStudentId(studentId);
+    }
+    
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO){
         return enrollmentsRepository.save(enrollmentDTO);
     }
@@ -39,6 +54,7 @@ public class EnrollmentsService {
     public void delete(Long id) {
         enrollmentsRepository.delete(id);
     }
+
 
 
 }
