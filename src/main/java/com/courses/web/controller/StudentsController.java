@@ -2,6 +2,7 @@ package com.courses.web.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,8 +42,8 @@ public class StudentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping
-    public ResponseEntity<List<StudentsSummary>> getAll(){
-        List<StudentsSummary> students = studentsService.getAll();
+    public ResponseEntity<Page<StudentsSummary>> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+         Page<StudentsSummary> students = studentsService.getAll(page, size);
         if (students.isEmpty()) {
             throw new NotFoundException("No contents found");
         }
@@ -67,8 +68,8 @@ public class StudentsController {
         @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
     })
     @GetMapping("/search")
-    public ResponseEntity<List<StudentDTO>> getByName(@RequestParam String name){
-        List<StudentDTO> students = studentsService.getByName(name);
+    public ResponseEntity<Page<StudentsSummary>> getByName(@RequestParam String name, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        Page<StudentsSummary> students = studentsService.getByName(name, page, size);
         if (students.isEmpty()) {
             throw new NotFoundException("No students found");
         }
@@ -84,8 +85,8 @@ public class StudentsController {
         @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
     })
     @GetMapping("/{id}/courses")
-    public ResponseEntity<List<CoursesSummary>> getCoursesByStudentId(@PathVariable Long id){
-        List<CoursesSummary> courses = studentsService.getCoursesByStudentId(id);
+    public ResponseEntity<Page<CoursesSummary>> getCoursesByStudentId(@PathVariable Long id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+         Page<CoursesSummary> courses = studentsService.getCoursesByStudentId(id, page, size);
         if (courses.isEmpty()) {
             throw new NotFoundException("No courses found for student with id: " + id);
         }

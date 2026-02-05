@@ -1,8 +1,10 @@
 package com.courses.persistence.repository;
 
 import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.EnrollmentDTO;
@@ -14,6 +16,7 @@ import com.courses.domain.projections.StudentsSummary;
 import com.courses.domain.repository.EnrollmentsRepositoryInterface;
 import com.courses.persistence.crud.CoursesCRUD;
 import com.courses.persistence.crud.EnrollmentsCRUD;
+import com.courses.persistence.crud.EnrollmentsPageable;
 import com.courses.persistence.crud.StudentsCRUD;
 import com.courses.persistence.mapper.EnrollmentsMapper;
 import com.courses.persistence.model.Course;
@@ -25,64 +28,71 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
 
     private final EnrollmentsCRUD enrollmentsCRUD;
+    private final EnrollmentsPageable enrollmentsPageable;
     private final CoursesCRUD coursesCRUD;
+    
     private final StudentsCRUD studentsCRUD;
     private final EnrollmentsMapper enrollmentsMapper;
 
     
-    public EnrollmentsRepositoryImpl(EnrollmentsCRUD enrollmentsCRUD, CoursesCRUD coursesCRUD,
-            StudentsCRUD studentsCRUD, EnrollmentsMapper enrollmentsMapper) {
+
+    public EnrollmentsRepositoryImpl(EnrollmentsCRUD enrollmentsCRUD, EnrollmentsPageable enrollmentsPageable,
+            CoursesCRUD coursesCRUD, StudentsCRUD studentsCRUD, EnrollmentsMapper enrollmentsMapper) {
         this.enrollmentsCRUD = enrollmentsCRUD;
+        this.enrollmentsPageable = enrollmentsPageable;
         this.coursesCRUD = coursesCRUD;
         this.studentsCRUD = studentsCRUD;
         this.enrollmentsMapper = enrollmentsMapper;
     }
 
-
     @Override
-    public List<EnrollmentDTO> getAll() {
-        return enrollmentsMapper.toDtos(enrollmentsCRUD.findAll());
+    public Page<EnrollmentDTO> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsPageable.findAll(pageable).map(enrollmentsMapper::toDto);
     }
 
     @Override
     public EnrollmentDTO getById(Long id) {
-       return enrollmentsMapper.toDto(enrollmentsCRUD.findById(id).orElseThrow(
-        () -> new NotFoundException("Enrollment not found with id: " + id)
-       ));
+        return enrollmentsMapper.toDto(enrollmentsCRUD.findById(id).orElseThrow(()->
+    new NotFoundException("Enrollment not found")));
     }
 
 
-    public List<CoursesSummary> getCoursesByStudentId(Long id){
-        return enrollmentsCRUD.findCoursesByStudentId(id);
+    public Page<CoursesSummary> getCoursesByStudentId(Long id, Pageable pageable) {
+        return enrollmentsPageable.findCoursesByStudentId(id, pageable);
     }
 
-    public List<StudentsSummary> getStudentsByCourseId(Long id){
-        return enrollmentsCRUD.findStudentsByCourseId(id);
+    public Page<StudentsSummary> getStudentsByCourseId(Long id, Pageable pageable){
+        return enrollmentsPageable.findStudentsByCourseId(id, pageable);
     }
 
 
     
     @Override
-    public List<EnrollmentDTO> getAllByDate(LocalDate date) {
-        return enrollmentsMapper.toDtos(enrollmentsCRUD.findAllByEnrollmentDate(date));
+    public Page<EnrollmentDTO> getAllByDate(LocalDate date, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsPageable.findAllByEnrollmentDate(date, pageable).map(enrollmentsMapper::toDto);
     }
 
 
     @Override
-    public List<EnrollmentDTO> getAllByStatus(EnrollmentStatus status) {
-       return enrollmentsMapper.toDtos(enrollmentsCRUD.findByStatus(status));
+    public Page<EnrollmentDTO> getAllByStatus(EnrollmentStatus status, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsPageable.findByStatus(status, pageable).map(enrollmentsMapper::toDto);
     }
 
 
     @Override
-    public List<EnrollmentDTO> getAllByCourseId(Long courseId) {
-       return enrollmentsMapper.toDtos(enrollmentsCRUD.findByCourseId(courseId));
+    public Page<EnrollmentDTO> getAllByCourseId(Long courseId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsPageable.findByCourseId(courseId, pageable).map(enrollmentsMapper::toDto);
     }
 
 
     @Override
-    public List<EnrollmentDTO> getAllByStudentId(Long studentId) {
-        return enrollmentsMapper.toDtos(enrollmentsCRUD.findByStudentId(studentId));
+    public Page<EnrollmentDTO> getAllByStudentId(Long studentId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsPageable.findByStudentId(studentId, pageable).map(enrollmentsMapper::toDto);
     }
     
 

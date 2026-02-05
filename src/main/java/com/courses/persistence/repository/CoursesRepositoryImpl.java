@@ -1,7 +1,9 @@
 package com.courses.persistence.repository;
 
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.CourseDTO;
@@ -10,6 +12,7 @@ import com.courses.domain.projections.CoursesSummary;
 import com.courses.domain.projections.StudentsSummary;
 import com.courses.domain.repository.RepositoryInterface;
 import com.courses.persistence.crud.CoursesCRUD;
+import com.courses.persistence.crud.CoursesPagebale;
 import com.courses.persistence.mapper.CoursesMapper;
 import com.courses.persistence.model.Course;
 
@@ -17,21 +20,24 @@ import com.courses.persistence.model.Course;
 public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,CoursesSummary> {
 
     private final CoursesCRUD coursesCRUD;
+    private final CoursesPagebale coursesPagebale;
     private final CoursesMapper coursesMapper;
     private final EnrollmentsRepositoryImpl enrollmentsRepositoryImpl;
 
     
 
-    public CoursesRepositoryImpl(CoursesCRUD coursesCRUD, CoursesMapper coursesMapper,
+    public CoursesRepositoryImpl(CoursesCRUD coursesCRUD, CoursesPagebale coursesPagebale, CoursesMapper coursesMapper,
             EnrollmentsRepositoryImpl enrollmentsRepositoryImpl) {
         this.coursesCRUD = coursesCRUD;
+        this.coursesPagebale = coursesPagebale;
         this.coursesMapper = coursesMapper;
         this.enrollmentsRepositoryImpl = enrollmentsRepositoryImpl;
     }
 
     @Override
-    public List<CoursesSummary>getAll() {
-        return coursesCRUD.findAllByActiveTrue();
+    public Page<CoursesSummary> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return coursesPagebale.findAllByActiveTrue(pageable);
     }
 
     @Override
@@ -42,13 +48,15 @@ public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,Cour
     }
 
     @Override
-    public List<CourseDTO> getByName(String name) {
-        return coursesMapper.toDtos(coursesCRUD.findAllByNameContainingIgnoreCase(name));
+    public Page<CoursesSummary> getByName(String name, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return coursesPagebale.findAllByNameContainingIgnoreCase(name, pageable);
     }
 
   
-    public List<StudentsSummary> getStudentsByCourseId(Long id){
-        return enrollmentsRepositoryImpl.getStudentsByCourseId(id);
+    public Page<StudentsSummary> getStudentsByCourseId(Long id, int page, int size){
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsRepositoryImpl.getStudentsByCourseId(id, pageable);
     }
 
     @Override
