@@ -1,11 +1,11 @@
 ### get all
 
-GET  http://localhost:8080/api/courses
+GET  http://localhost:8080/api/courses?page=0&size=3
 ### get by ids
 GET  http://localhost:8080/api/courses/5
 
 ### get by name
-GET  http://localhost:8080/api/courses/search?name=lega
+GET  http://localhost:8080/api/courses/search?name=a&page=0&size=4
 
 ### get students by course id
 
