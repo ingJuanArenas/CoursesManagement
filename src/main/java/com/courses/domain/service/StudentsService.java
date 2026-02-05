@@ -1,10 +1,9 @@
 package com.courses.domain.service;
 
-import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.projections.CoursesSummary;
 import com.courses.domain.projections.StudentsSummary;
@@ -19,21 +18,21 @@ public class StudentsService {
         this.studentRepository = studentRepository;
     }
 
-    public List<StudentsSummary> getAll() {
-        return studentRepository.getAll();
+    public Page<StudentsSummary> getAll(int page, int size) {
+        return studentRepository.getAll(page, size);
     }
 
     public StudentDTO getById(Long id) {
         return studentRepository.getById(id);
     }
 
-    public List<StudentDTO> getByName(String name) {
-        return studentRepository.getByName(name);
+    public Page<StudentsSummary> getByName(String name, int page, int size) {
+        return studentRepository.getByName(name, page, size);
     }
 
 
-    public List<CoursesSummary> getCoursesByStudentId(Long id){
-        return studentRepository.getCoursesByStudentId(id);
+    public Page<CoursesSummary> getCoursesByStudentId(Long id, int page, int size) {
+        return studentRepository.getCoursesByStudentId(id, page, size);
     }
 
     public StudentDTO save (StudentDTO studentDTO) {

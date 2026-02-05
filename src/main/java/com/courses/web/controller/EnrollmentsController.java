@@ -1,8 +1,8 @@
 package com.courses.web.controller;
 
 import java.time.LocalDate;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,8 +42,8 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping
-    public ResponseEntity<List<EnrollmentDTO>> getAll(){
-        List<EnrollmentDTO> enrollments = enrollmentsService.getAll();
+    public ResponseEntity<Page<EnrollmentDTO>> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+         Page<EnrollmentDTO> enrollments = enrollmentsService.getAll(page, size);
         if (enrollments.isEmpty()) {
             throw new NotFoundException("No contents found");
         }
@@ -69,8 +69,8 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/search")
-    public ResponseEntity<List<EnrollmentDTO>> getAllByDate(@RequestParam("date")LocalDate date){
-        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByDate(date);
+    public ResponseEntity<Page<EnrollmentDTO>> getAllByDate(@RequestParam("date")LocalDate date, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+         Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByDate(date, page, size);
         if (enrollments.isEmpty()) {
             throw new NotFoundException("No contents found");
         }
@@ -84,8 +84,8 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/status")
-    public ResponseEntity<List<EnrollmentDTO>> getAllByStatus(@RequestParam("status")EnrollmentStatus status){
-        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByStatus(status);
+    public ResponseEntity<Page<EnrollmentDTO>> getAllByStatus(@RequestParam("status")EnrollmentStatus status, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+         Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByStatus(status, page, size);
         if (enrollments.isEmpty()) {
             throw new NotFoundException("No contents found");
         }
@@ -99,8 +99,8 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/course")
-    public ResponseEntity<List<EnrollmentDTO>> getAllByCourseId(@RequestParam("courseId")Long courseId){
-        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByCourseId(courseId);
+    public ResponseEntity<Page<EnrollmentDTO>> getAllByCourseId(@RequestParam("courseId")Long courseId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByCourseId(courseId, page, size);
         if (enrollments.isEmpty()) {
             throw new NotFoundException("No contents found");
         }
@@ -113,8 +113,8 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/student")
-    public ResponseEntity<List<EnrollmentDTO>> getAllByStudentId(@RequestParam("studentId")Long studentId){
-        List<EnrollmentDTO> enrollments = enrollmentsService.getAllByStudentId(studentId);
+    public ResponseEntity<Page<EnrollmentDTO>> getAllByStudentId(@RequestParam("studentId")Long studentId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
+        Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByStudentId(studentId, page, size);
         if (enrollments.isEmpty()) {
             throw new NotFoundException("No contents found");
         }

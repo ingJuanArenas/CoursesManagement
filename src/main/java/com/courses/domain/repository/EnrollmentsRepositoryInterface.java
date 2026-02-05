@@ -1,18 +1,19 @@
 package com.courses.domain.repository;
 
 import java.time.LocalDate;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
 
 import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.persistence.model.EnrollmentStatus;
 
 public interface EnrollmentsRepositoryInterface {
 
-    List<EnrollmentDTO> getAll();
-    List<EnrollmentDTO> getAllByDate(LocalDate date);
-    List<EnrollmentDTO> getAllByStatus(EnrollmentStatus status);
-    List<EnrollmentDTO> getAllByCourseId(Long courseId);
-    List<EnrollmentDTO> getAllByStudentId(Long studentId);
+    Page<EnrollmentDTO> getAll(int page, int size);
+    Page<EnrollmentDTO> getAllByDate(LocalDate date, int page, int size);
+    Page<EnrollmentDTO> getAllByStatus(EnrollmentStatus status, int page, int size);
+    Page<EnrollmentDTO> getAllByCourseId(Long courseId, int page, int size);
+    Page<EnrollmentDTO> getAllByStudentId(Long studentId, int page, int size);
     EnrollmentDTO getById(Long id);
     EnrollmentDTO save(EnrollmentDTO enrollmentDTO);
     EnrollmentDTO update(Long id, EnrollmentDTO enrollmentDTO);

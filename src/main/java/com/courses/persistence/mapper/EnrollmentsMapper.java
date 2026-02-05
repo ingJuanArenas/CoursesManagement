@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.data.domain.Page;
 
 import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.persistence.model.Enrollment;
@@ -26,6 +27,5 @@ public interface EnrollmentsMapper {
     Enrollment toEntity(EnrollmentDTO dto);
 
     EnrollmentDTO toDto(Enrollment enrollment);
-    List<EnrollmentDTO> toDtos(List<Enrollment> enrollments);
 
 }
