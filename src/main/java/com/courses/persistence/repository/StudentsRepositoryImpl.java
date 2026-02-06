@@ -8,33 +8,29 @@ import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
-import com.courses.domain.projections.CoursesSummary;
-import com.courses.domain.projections.StudentsSummary;
 import com.courses.domain.repository.RepositoryInterface;
 import com.courses.persistence.crud.StudentsCRUD;
-import com.courses.persistence.crud.StudentsPageable;
 import com.courses.persistence.mapper.StudentsMapper;
 import com.courses.persistence.model.Student;
+import com.courses.persistence.projections.CoursesSummary;
+import com.courses.persistence.projections.StudentsSummary;
 
 @Repository
 public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,StudentsSummary>{
 
     private final StudentsCRUD studentsCRUD;
-    private final StudentsPageable studentsPageable;
     private final StudentsMapper studentsMapper;
    private final EnrollmentsRepositoryImpl enrollmentsRepositoryImpl;
 
-   public StudentsRepositoryImpl(StudentsCRUD studentsCRUD, StudentsPageable studentsPageable, StudentsMapper studentsMapper, EnrollmentsRepositoryImpl enrollmentsRepositoryImpl) {
+   public StudentsRepositoryImpl(StudentsCRUD studentsCRUD, StudentsMapper studentsMapper, EnrollmentsRepositoryImpl enrollmentsRepositoryImpl) {
         this.studentsCRUD = studentsCRUD;
-        this.studentsPageable = studentsPageable;
         this.studentsMapper = studentsMapper;
         this.enrollmentsRepositoryImpl = enrollmentsRepositoryImpl;
     }
 
     @Override
-    public Page<StudentsSummary> getAll(int page, int size) {
-         Pageable pageable = PageRequest.of(page, size);
-         return studentsPageable.findAllByActiveTrue(pageable);
+    public Page<StudentsSummary> getAll(Pageable pageable) {
+         return studentsCRUD.findAllByActiveTrue(pageable);
       }
 
     @Override
@@ -45,9 +41,8 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,S
     }
 
     @Override
-    public Page<StudentsSummary> getByName(String name, int page, int size) {
-      Pageable pageable = PageRequest.of(page, size);
-      return studentsPageable.findAllByNameContainingIgnoreCaseAndActiveTrue(name, pageable);
+    public Page<StudentsSummary> getByName(String name, Pageable pageable) {
+      return studentsCRUD.findAllByNameContainingIgnoreCaseAndActiveTrue(name, pageable);
    }
 
 

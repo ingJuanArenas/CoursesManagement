@@ -3,11 +3,13 @@ package com.courses.domain.service;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.CourseDTO;
-import com.courses.domain.projections.CoursesSummary;
-import com.courses.domain.projections.StudentsSummary;
+import com.courses.persistence.projections.CoursesSummary;
+import com.courses.persistence.projections.StudentsSummary;
 import com.courses.persistence.repository.CoursesRepositoryImpl;
 
 @Service
@@ -21,7 +23,8 @@ public class CoursesService {
     }
 
     public Page<CoursesSummary> getAll(int page, int size) {
-        return courseRepository.getAll(page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return courseRepository.getAll(pageable);
     }
 
     public CourseDTO getById(Long id) {
@@ -29,7 +32,8 @@ public class CoursesService {
     }
 
     public Page<CoursesSummary> getByName(String name, int page, int size) {
-        return courseRepository.getByName(name, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return courseRepository.getByName(name,pageable);
     }
 
 

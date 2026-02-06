@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
-import com.courses.domain.projections.CoursesSummary;
-import com.courses.domain.projections.StudentsSummary;
 import com.courses.domain.service.StudentsService;
+import com.courses.persistence.projections.CoursesSummary;
+import com.courses.persistence.projections.StudentsSummary;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

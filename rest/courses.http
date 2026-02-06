@@ -5,11 +5,11 @@ GET  http://localhost:8080/api/courses?page=0&size=3
 GET  http://localhost:8080/api/courses/5
 
 ### get by name
-GET  http://localhost:8080/api/courses/search?name=a&page=0&size=4
+GET  http://localhost:8080/api/courses/search?name=a&page3&size=2
 
 ### get students by course id
 
-GET  http://localhost:8080/api/courses/2/students
+GET  http://localhost:8080/api/courses/2/students?page=0&size=2
 ### create
 
 POST  http://localhost:8080/api/courses
