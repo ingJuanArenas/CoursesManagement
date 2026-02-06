@@ -8,36 +8,32 @@ import org.springframework.stereotype.Repository;
 
 import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.exceptions.NotFoundException;
-import com.courses.domain.projections.CoursesSummary;
-import com.courses.domain.projections.StudentsSummary;
 import com.courses.domain.repository.RepositoryInterface;
 import com.courses.persistence.crud.CoursesCRUD;
-import com.courses.persistence.crud.CoursesPagebale;
 import com.courses.persistence.mapper.CoursesMapper;
 import com.courses.persistence.model.Course;
+import com.courses.persistence.projections.CoursesSummary;
+import com.courses.persistence.projections.StudentsSummary;
 
 @Repository
 public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,CoursesSummary> {
 
     private final CoursesCRUD coursesCRUD;
-    private final CoursesPagebale coursesPagebale;
     private final CoursesMapper coursesMapper;
     private final EnrollmentsRepositoryImpl enrollmentsRepositoryImpl;
 
     
 
-    public CoursesRepositoryImpl(CoursesCRUD coursesCRUD, CoursesPagebale coursesPagebale, CoursesMapper coursesMapper,
+    public CoursesRepositoryImpl(CoursesCRUD coursesCRUD, CoursesMapper coursesMapper,
             EnrollmentsRepositoryImpl enrollmentsRepositoryImpl) {
         this.coursesCRUD = coursesCRUD;
-        this.coursesPagebale = coursesPagebale;
         this.coursesMapper = coursesMapper;
         this.enrollmentsRepositoryImpl = enrollmentsRepositoryImpl;
     }
 
     @Override
-    public Page<CoursesSummary> getAll(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return coursesPagebale.findAllByActiveTrue(pageable);
+    public Page<CoursesSummary> getAll(Pageable pageable) {
+        return coursesCRUD.findAllByActiveTrue(pageable);
     }
 
     @Override
@@ -48,9 +44,8 @@ public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,Cour
     }
 
     @Override
-    public Page<CoursesSummary> getByName(String name, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return coursesPagebale.findAllByNameContainingIgnoreCase(name, pageable);
+    public Page<CoursesSummary> getByName(String name, Pageable pageable) {
+        return coursesCRUD.findAllByNameContainingIgnoreCase(name, pageable);
     }
 
   

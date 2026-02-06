@@ -3,6 +3,8 @@ package com.courses.domain.service;
 import java.time.LocalDate;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.EnrollmentDTO;
@@ -19,7 +21,8 @@ public class EnrollmentsService {
     }
 
     public Page<EnrollmentDTO> getAll(int page, int size) {
-        return enrollmentsRepository.getAll(page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsRepository.getAll(pageable );
     }
 
     public EnrollmentDTO getById(Long id) {
@@ -27,20 +30,24 @@ public class EnrollmentsService {
     }
 
     public Page<EnrollmentDTO> getAllByDate(LocalDate date, int page, int size){
-        return enrollmentsRepository.getAllByDate(date, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsRepository.getAllByDate(date, pageable);
     }
 
     
     public Page<EnrollmentDTO> getAllByStatus(EnrollmentStatus status, int page, int size) {
-        return enrollmentsRepository.getAllByStatus(status, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsRepository.getAllByStatus(status, pageable);
     }
 
     public Page<EnrollmentDTO> getAllByCourseId(Long courseId, int page, int size) {
-        return enrollmentsRepository.getAllByCourseId(courseId, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsRepository.getAllByCourseId(courseId, pageable);
     }
 
     public Page<EnrollmentDTO> getAllByStudentId(Long studentId, int page, int size) {
-        return enrollmentsRepository.getAllByStudentId(studentId, page, size);
+        Pageable pageable = PageRequest.of(page, size);
+        return enrollmentsRepository.getAllByStudentId(studentId, pageable);
     }
     
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO){
