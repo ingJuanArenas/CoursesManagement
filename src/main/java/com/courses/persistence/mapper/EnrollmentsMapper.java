@@ -13,7 +13,6 @@ import com.courses.persistence.model.Enrollment;
 public interface EnrollmentsMapper {
     
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "enrollmentDate", ignore = true)
 
     // 🔥 ESTOS SON LOS IMPORTANTES
     @Mapping(target = "courseId", source = "courseId")

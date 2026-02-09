@@ -1,10 +1,12 @@
 package com.courses.persistence.repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.domain.exceptions.AlreadyExistsException;
@@ -19,6 +21,7 @@ import com.courses.persistence.model.Course;
 import com.courses.persistence.model.Enrollment;
 import com.courses.persistence.model.EnrollmentStatus;
 import com.courses.persistence.projections.CoursesSummary;
+import com.courses.persistence.projections.EnrollmentsSummary;
 import com.courses.persistence.projections.StudentsSummary;
 
 @Repository
@@ -47,9 +50,10 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     }
 
     @Override
-    public EnrollmentDTO getById(Long id) {
-        return enrollmentsMapper.toDto(enrollmentsCRUD.findById(id).orElseThrow(()->
-    new NotFoundException("Enrollment not found")));
+    public EnrollmentsSummary getById(Long id) {
+        return enrollmentsCRUD.findEnrollmentById(id).orElseThrow(
+            () -> new NotFoundException("Enrollment not found with id: " + id)
+        );
     }
 
 
@@ -63,10 +67,7 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
 
 
     
-    @Override
-    public Page<EnrollmentDTO> getAllByDate(LocalDate date, Pageable pageable) {
-        return enrollmentsCRUD.findAllByEnrollmentDate(date, pageable).map(enrollmentsMapper::toDto);
-    }
+ 
 
 
     @Override
@@ -88,6 +89,7 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     
 
     @Override
+    @Transactional
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO) {
 
         var course = this.coursesCRUD.findById(enrollmentDTO.courseId()).orElseThrow(()-> new NotFoundException("Course Not Found"));
@@ -113,7 +115,6 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
         
         Enrollment enrollment = enrollmentsMapper.toEntity(enrollmentDTO);
         enrollment.setStatus(EnrollmentStatus.ENROLLED);
-        enrollment.setEnrollmentDate(LocalDate.now());
         course.setCapacity(course.getCapacity()-1);
 
         return enrollmentsMapper.toDto(enrollmentsCRUD.save(enrollment));
@@ -121,6 +122,7 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     }
 
     @Override
+    @Transactional
     public EnrollmentDTO update(Long id, EnrollmentDTO enrollmentDTO) {
         Enrollment enrollment = enrollmentsCRUD.findById(id).orElseThrow(
             () -> new NotFoundException("Enrollment not found with id: " + id)
@@ -129,7 +131,6 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
         
         if(course.getEnrollments().contains(enrollment)){
            
-        enrollment.setEnrollmentDate(LocalDate.now());
         enrollment.setStatus(enrollmentDTO.status());
             if(enrollmentDTO.status().equals(EnrollmentStatus.CANCELLED)){
                 course.setCapacity(course.getCapacity()+1);
@@ -143,6 +144,7 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
        Enrollment enrollment = enrollmentsCRUD.findById(id).orElseThrow(()-> new NotFoundException("Enrollment not found with id: " + id ));
        if (enrollment.getStatus().equals(EnrollmentStatus.ENROLLED)){
