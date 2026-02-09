@@ -3,11 +3,14 @@ package com.courses.persistence.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -22,7 +25,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Student {
+@EntityListeners(AuditingEntityListener.class)
+public class Student extends Auditable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.persistence.model.EnrollmentStatus;
+import com.courses.persistence.projections.EnrollmentsSummary;
 import com.courses.persistence.repository.EnrollmentsRepositoryImpl;
 
 @Service
@@ -25,13 +26,8 @@ public class EnrollmentsService {
         return enrollmentsRepository.getAll(pageable );
     }
 
-    public EnrollmentDTO getById(Long id) {
+    public EnrollmentsSummary getById(Long id) {
         return enrollmentsRepository.getById(id);
-    }
-
-    public Page<EnrollmentDTO> getAllByDate(LocalDate date, int page, int size){
-        Pageable pageable = PageRequest.of(page, size);
-        return enrollmentsRepository.getAllByDate(date, pageable);
     }
 
     

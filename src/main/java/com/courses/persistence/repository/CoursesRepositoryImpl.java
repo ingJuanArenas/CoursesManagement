@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.courses.domain.dtos.CourseDTO;
 import com.courses.domain.exceptions.NotFoundException;
@@ -61,6 +62,7 @@ public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,Cour
     }
 
     @Override
+    @Transactional
     public CourseDTO update(Long id, CourseDTO courseDTO) {
        Course course = coursesCRUD.findById(id).orElseThrow(
         () -> new NotFoundException("Course not found with id: " + id)
@@ -72,6 +74,7 @@ public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,Cour
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         if (!coursesCRUD.existsById(id)) {
             throw new NotFoundException("Course not found with id: " + id);

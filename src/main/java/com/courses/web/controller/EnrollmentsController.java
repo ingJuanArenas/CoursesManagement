@@ -18,6 +18,7 @@ import com.courses.domain.dtos.EnrollmentDTO;
 import com.courses.domain.exceptions.NotFoundException;
 import com.courses.domain.service.EnrollmentsService;
 import com.courses.persistence.model.EnrollmentStatus;
+import com.courses.persistence.projections.EnrollmentsSummary;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -58,25 +59,11 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/{id}")
-    public ResponseEntity<EnrollmentDTO> getById(@PathVariable Long id){
-        EnrollmentDTO enrollment = enrollmentsService.getById(id);
+    public ResponseEntity<EnrollmentsSummary> getById(@PathVariable Long id){
+        EnrollmentsSummary enrollment = enrollmentsService.getById(id);
         return ResponseEntity.ok(enrollment);
     }
 
-    @Operation(summary = "Search enrollments by date", description = "Returns a list of enrollments by their date.")
-    @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "Success"),
-        @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
-    })
-    @GetMapping("/search")
-    public ResponseEntity<Page<EnrollmentDTO>> getAllByDate(@RequestParam("date")LocalDate date, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
-         Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByDate(date, page, size);
-        if (enrollments.isEmpty()) {
-            throw new NotFoundException("No contents found");
-        }
-
-        return ResponseEntity.ok(enrollments);
-    }
 
     @Operation(summary = "Search enrollments by status", description = "Returns a list of enrollments by their status.")
     @ApiResponses({

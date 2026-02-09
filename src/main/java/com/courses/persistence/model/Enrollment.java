@@ -1,11 +1,13 @@
 package com.courses.persistence.model;
 
-import java.time.LocalDate;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
@@ -24,7 +26,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Enrollment {
+@EntityListeners(AuditingEntityListener.class)
+public class Enrollment extends Auditable {
     
 
     @Id
@@ -32,10 +35,6 @@ public class Enrollment {
     @JsonIgnore
     private Long id;
     
-
-    @Column(name = "enrollment_date", nullable = false)
-    private LocalDate enrollmentDate;
-
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EnrollmentStatus status;

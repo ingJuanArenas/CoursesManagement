@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.courses.domain.dtos.StudentDTO;
 import com.courses.domain.exceptions.NotFoundException;
@@ -59,6 +60,7 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,S
     }
 
     @Override
+    @Transactional
     public StudentDTO update(Long id, StudentDTO studentDTO) {
         Student student = studentsCRUD.findById(id).orElseThrow(
         () -> new NotFoundException("Student not found with id: " + id)
@@ -70,6 +72,7 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,S
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
          if (!studentsCRUD.existsById(id)) {
             throw new NotFoundException("Student not found with id: " + id);
