@@ -2,7 +2,8 @@
 
 GET  http://localhost:8080/api/courses?page=0&size=3
 ### get by ids
-GET  http://localhost:8080/api/courses/5
+GET  http://localhost:8080/api/courses/9
+
 
 ### get by name
 GET  http://localhost:8080/api/courses/search?name=a&page3&size=2
@@ -16,8 +17,8 @@ POST  http://localhost:8080/api/courses
 Content-Type: application/json
 
 {
-    "name": "Example",
-    "description": "Example",
+    "name": "Example skssasaksks",
+    "description": "Example sadssasdass",
     "capacity":11,
     "active":true
 
@@ -26,12 +27,12 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8080/api/courses/1
+PUT http://localhost:8080/api/courses/11
 Content-Type: application/json
 
 {
-    "name": "Java Basics",
-    "description": "Java for begginers",
+    "name": "exampleeeeeeeeeeeeee",
+    "description": "exaaammpleeeeeeeeeeeeee",
     "capacity":20,
     "active":true
 

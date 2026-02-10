@@ -1,10 +1,7 @@
 ### get all
 GET  http://localhost:8080/api/enrollments?page=2&size=4
 ### get by ids
-GET  http://localhost:8080/api/enrollments/23
-
-### get By date
-GET  http://localhost:8080/api/enrollments/search?date=2026-01-15&page=0&size=1
+GET  http://localhost:8080/api/enrollments/27
 
 ### get by student id
 GET  http://localhost:8080/api/enrollments/student?studentId=3&page=1&size=2
@@ -17,20 +14,20 @@ POST http://localhost:8080/api/enrollments
 Content-Type: application/json
 
 {
-  "courseId":1,
+  "courseId":11,
   "studentId":4
 }
 ### update
-PUT http://localhost:8080/api/enrollments/23
+PUT http://localhost:8080/api/enrollments/27
 Content-Type: application/json
 
 {
     "status": "COMPLETED",
-    "courseId":1,
+    "courseId":11,
     "studentId":4
 
 }
 
 
 ### delete
-DELETE http://localhost:8080/api/enrollments/18
+DELETE http://localhost:8080/api/enrollments/23
