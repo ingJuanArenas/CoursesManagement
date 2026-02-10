@@ -1,8 +1,5 @@
 package com.courses.persistence.repository;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -89,7 +86,6 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     
 
     @Override
-    @Transactional
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO) {
 
         var course = this.coursesCRUD.findById(enrollmentDTO.courseId()).orElseThrow(()-> new NotFoundException("Course Not Found"));

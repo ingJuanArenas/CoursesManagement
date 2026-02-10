@@ -3,7 +3,7 @@
 GET  http://localhost:8080/api/students?page=2&size=2
 
 ### get by id
-GET  http://localhost:8080/api/students/12
+GET  http://localhost:8080/api/students/14
 
 ### get by name
 GET  http://localhost:8080/api/students/search?name=Ana&page=1&size=1
@@ -17,24 +17,24 @@ POST  http://localhost:8080/api/students
 Content-Type: application/json
 
 {
-    "name": "New Student",
-    "email":"newstudent@example.com",
+    "name": "Pepito Perez 3",
+    "email":"pepito3@example.com",
     "active":true
 }
 
 
 ###
 
-PUT http://localhost:8080/api/students/12
+PUT http://localhost:8080/api/students/14
 Content-Type: application/json
 
 {
-    "name": "Nuevo estudiante",
-    "email":"nuevo@example.com",
+    "name": "Pepito Perez Updated",
+    "email":"updatepp@example.com",
     "active":true
 }
 
 ### 
-DELETE http://localhost:8080/api/students/2
+DELETE http://localhost:8080/api/students/3
 
 
