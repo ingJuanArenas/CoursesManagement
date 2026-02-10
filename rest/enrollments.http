@@ -14,20 +14,20 @@ POST http://localhost:8080/api/enrollments
 Content-Type: application/json
 
 {
-  "courseId":11,
+  "courseId":15,
   "studentId":4
 }
 ### update
-PUT http://localhost:8080/api/enrollments/27
+PUT http://localhost:8080/api/enrollments/29
 Content-Type: application/json
 
 {
-    "status": "COMPLETED",
-    "courseId":11,
+    "status": "CANCELLED",
+    "courseId":15,
     "studentId":4
 
 }
 
 
 ### delete
-DELETE http://localhost:8080/api/enrollments/23
+DELETE http://localhost:8080/api/enrollments/29
