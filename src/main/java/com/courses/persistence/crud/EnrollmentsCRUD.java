@@ -29,7 +29,7 @@ public interface EnrollmentsCRUD extends JpaRepository<Enrollment,Long> {
     Page<Enrollment> findByStudentId(Long studentId, Pageable pageable);
 
     @Query(value = """
-        SELECT e.id, s.name AS studentName, c.name AS courseName, e.enrollment_date, e.status
+        SELECT e.id, s.name AS studentName, c.name AS courseName, e.created_date, e.status
         FROM enrollments e
         JOIN students s ON e.student_id = s.id
         JOIN courses c ON e.course_id = c.id
