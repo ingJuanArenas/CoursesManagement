@@ -2,11 +2,14 @@ package com.courses.persistence.model;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.courses.persistence.Audit.Audit;
+import com.courses.persistence.Audit.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -26,8 +29,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Course extends Auditable {
+@EntityListeners({AuditingEntityListener.class, Audit.class})
+public class Course extends Auditable implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,5 +53,13 @@ public class Course extends Auditable {
     private List<Enrollment> enrollments = new ArrayList<>();
 
 
+    @Override
+    public String toString() {
+        return "Course [id=" + id + ", name=" + name + ", description=" + description + ", capacity=" + capacity
+                + ", active=" + active +  "]";
+    }
+
+
+    
     
 }

@@ -86,7 +86,6 @@ public class EnrollmentsRepositoryImpl implements EnrollmentsRepositoryInterface
     
 
     @Override
-    @Transactional
     public EnrollmentDTO save(EnrollmentDTO enrollmentDTO) {
 
         var course = this.coursesCRUD.findById(enrollmentDTO.courseId()).orElseThrow(()-> new NotFoundException("Course Not Found"));

@@ -1,4 +1,4 @@
-package com.courses.persistence.model;
+package com.courses.persistence.Audit;
 
 import java.time.LocalDateTime;
 

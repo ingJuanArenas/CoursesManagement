@@ -1,8 +1,12 @@
 package com.courses.persistence.model;
 
 
+import java.io.Serializable;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.courses.persistence.Audit.Audit;
+import com.courses.persistence.Audit.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -26,8 +30,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Enrollment extends Auditable {
+@EntityListeners({AuditingEntityListener.class, Audit.class})
+public class Enrollment extends Auditable implements Serializable {
     
 
     @Id
@@ -54,6 +58,14 @@ public class Enrollment extends Auditable {
     @JoinColumn(name = "student_id", insertable = false, updatable= false)
     private Student student;
 
+
+    @Override
+    public String toString() {
+        return "Enrollment [id=" + id + ", status=" + status + ", courseId=" + courseId + ", studentId=" + studentId
+                + ", course=" + course + ", student=" + student + "]";
+    }
+
+    
     
 
 }

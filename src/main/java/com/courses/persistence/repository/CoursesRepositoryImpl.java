@@ -79,10 +79,7 @@ public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,Cour
         if (!coursesCRUD.existsById(id)) {
             throw new NotFoundException("Course not found with id: " + id);
         }
-        //Soft delete
-        Course course = coursesMapper.toEntity(getById(id));
-        course.setActive(false);
-        coursesCRUD.save(course);
+        coursesCRUD.deleteById(id);
     }
 
 

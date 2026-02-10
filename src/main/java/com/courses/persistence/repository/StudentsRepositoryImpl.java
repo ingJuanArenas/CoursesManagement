@@ -54,6 +54,7 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,S
 
     
     @Override
+    @Transactional
     public StudentDTO save(StudentDTO studentDTO) {
        Student student = studentsMapper.toEntity(studentDTO);
        return studentsMapper.toDto(studentsCRUD.save(student));
@@ -77,10 +78,7 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,S
          if (!studentsCRUD.existsById(id)) {
             throw new NotFoundException("Student not found with id: " + id);
          }
-         //Soft delete
-         Student student = studentsMapper.toEntity(getById(id));
-         student.setActive(false);
-         studentsCRUD.save(student);
+         studentsCRUD.deleteById(id);
     }
 
     

@@ -15,6 +15,7 @@ public interface CoursesMapper {
     @Mapping(target = "id", ignore = true)
     Course toEntity (CourseDTO courseDTO);
 
+
     CourseDTO toDto (Course course);
     List<CourseDTO> toDtos (List<Course> courses);
 

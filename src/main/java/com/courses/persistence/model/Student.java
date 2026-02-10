@@ -1,10 +1,13 @@
 package com.courses.persistence.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.courses.persistence.Audit.Audit;
+import com.courses.persistence.Audit.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -25,8 +28,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-public class Student extends Auditable {
+@EntityListeners({AuditingEntityListener.class, Audit.class})
+public class Student extends Auditable implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +47,14 @@ public class Student extends Auditable {
 
     @OneToMany(mappedBy = "student", orphanRemoval = true, cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<Enrollment> enrollments = new ArrayList<>();       
+    private List<Enrollment> enrollments = new ArrayList<>();
+
+
+    @Override
+    public String toString() {
+        return "Student [id=" + id + ", name=" + name + ", email=" + email + ", active=" + active + "]";
+    }       
+
+    
 
 }
