@@ -1,6 +1,5 @@
 package com.courses.domain.service;
 
-import java.time.LocalDate;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
