@@ -1,8 +1,10 @@
-### get all
 
+GET  http://localhost:8080/api/courses
+
+### get all
 GET  http://localhost:8080/api/courses?page=0&size=3
 ### get by ids
-GET  http://localhost:8080/api/courses/6
+GET  http://localhost:8080/api/courses/20
 
 
 ### get by name
@@ -17,7 +19,7 @@ POST  http://localhost:8080/api/courses
 Content-Type: application/json
 
 {
-    "name": "Data Structures 4",
+    "name": "Data Structures 5",
     "description": "Learn advanced data structures",
     "capacity":11
 }
@@ -25,18 +27,16 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8080/api/courses/15
+PUT http://localhost:8080/api/courses/20
 Content-Type: application/json
 
 {
-    "name": "Data Structures 3 Updated",
+    "name": "Data Structures 5 Updated",
     "description": "Learn advanced data structures - Updated",
-    "capacity":20,
-    "active":true
-
+    "capacity":20
 }
 
 ### 
-DELETE http://localhost:8080/api/courses/15
+DELETE http://localhost:8080/api/courses/20
 
 
