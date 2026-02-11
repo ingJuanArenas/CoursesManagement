@@ -1,7 +1,6 @@
 package com.courses.persistence.model;
 
 
-import java.io.Serializable;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -31,7 +30,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EntityListeners({AuditingEntityListener.class, Audit.class})
-public class Enrollment extends Auditable implements Serializable {
+public class Enrollment extends Auditable {
     
 
     @Id
