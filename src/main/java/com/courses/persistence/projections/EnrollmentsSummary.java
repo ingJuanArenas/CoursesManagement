@@ -1,6 +1,5 @@
 package com.courses.persistence.projections;
 
-import java.time.LocalDateTime;
 
 import com.courses.persistence.model.EnrollmentStatus;
 

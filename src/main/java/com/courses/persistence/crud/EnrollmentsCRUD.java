@@ -1,5 +1,4 @@
 package com.courses.persistence.crud;
-import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -35,5 +34,7 @@ public interface EnrollmentsCRUD extends JpaRepository<Enrollment,Long> {
         JOIN courses c ON e.course_id = c.id
         WHERE e.id = :id """, nativeQuery = true)
     Optional<EnrollmentsSummary> findEnrollmentById(@Param("id") Long id);
+
+    boolean existsByCourseIdAndStudentId(Long courseId, Long studentId);
   
 }

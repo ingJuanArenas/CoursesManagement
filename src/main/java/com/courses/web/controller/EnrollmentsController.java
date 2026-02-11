@@ -1,7 +1,5 @@
 package com.courses.web.controller;
 
-import java.time.LocalDate;
-
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
