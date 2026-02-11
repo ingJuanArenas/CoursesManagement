@@ -17,11 +17,9 @@ POST  http://localhost:8080/api/courses
 Content-Type: application/json
 
 {
-    "name": "Data Structures 3",
+    "name": "Data Structures 4",
     "description": "Learn advanced data structures",
-    "capacity":11,
-    "active":true
-
+    "capacity":11
 }
 
 
