@@ -25,6 +25,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -103,7 +104,7 @@ public class CoursesController {
         @ApiResponse(responseCode = "409", description = "Conflict",content = @Content)
     })
     @PostMapping
-    public ResponseEntity<CourseDTO> save( @RequestBody CourseDTO course){
+    public ResponseEntity<CourseDTO> save( @Valid @RequestBody CourseDTO course){
         return ResponseEntity.ok(coursesService.save(course));
     }
 
@@ -115,7 +116,7 @@ public class CoursesController {
         @ApiResponse(responseCode = "409", description = "Conflict",content = @Content)
     })
     @PutMapping("/{id}")
-    public ResponseEntity<CourseDTO> update(@PathVariable Long id, @RequestBody CourseDTO course){
+    public ResponseEntity<CourseDTO> update(@PathVariable Long id, @Valid @RequestBody CourseDTO course){
         return ResponseEntity.ok(coursesService.update(id,course));
     }
 
