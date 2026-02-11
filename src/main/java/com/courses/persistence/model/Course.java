@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.courses.persistence.Audit.Audit;
 import com.courses.persistence.Audit.Auditable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,7 +27,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@EntityListeners({AuditingEntityListener.class, Audit.class})
+@EntityListeners(AuditingEntityListener.class)
 public class Course extends Auditable {
 
     @Id
