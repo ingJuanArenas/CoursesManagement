@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.courses.domain.dtos.EnrollmentDTO;
+import com.courses.persistence.model.Enrollment;
 import com.courses.persistence.model.EnrollmentStatus;
 import com.courses.persistence.projections.EnrollmentsSummary;
 
@@ -16,6 +17,6 @@ public interface EnrollmentsRepositoryInterface {
     Page<EnrollmentDTO> getAllByStudentId(Long studentId, Pageable pageable);
     EnrollmentsSummary getById(Long id);
     EnrollmentDTO save(EnrollmentDTO enrollmentDTO);
-    EnrollmentDTO update(Long id, EnrollmentDTO enrollmentDTO);
-    void delete(Long id);
+    EnrollmentDTO update(Enrollment enrollment);
+    void delete(Enrollment enrollment);
 } 
