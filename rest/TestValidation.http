@@ -1,0 +1,31 @@
+### create student with name empty
+
+POST  http://localhost:8080/api/students
+Content-Type: application/json
+
+{
+    "name": "",
+    "email":"",
+    "active": true
+}
+
+
+### create a coruse with name empty
+POST  http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+    "name": "",
+    "description": "",
+    "capacity": 0,
+    "active": true
+}
+
+### create a enrollment with student id and course id empty
+POST  http://localhost:8080/api/enrollments
+Content-Type: application/json
+
+{
+    "studentId": null,
+    "courseId": null
+}

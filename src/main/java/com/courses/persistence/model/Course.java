@@ -2,7 +2,6 @@ package com.courses.persistence.model;
 
 
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +29,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @EntityListeners({AuditingEntityListener.class, Audit.class})
-public class Course extends Auditable implements Serializable {
+public class Course extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +44,8 @@ public class Course extends Auditable implements Serializable {
     private int capacity;
 
     @Column(name= "is_active",nullable = false)
-    private boolean active;
+    @JsonIgnore
+    private boolean active= true;
    
 
     @OneToMany(mappedBy = "course")

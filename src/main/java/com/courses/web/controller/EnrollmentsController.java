@@ -24,6 +24,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 
 @RestController
@@ -114,7 +115,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @PostMapping
-    public ResponseEntity<EnrollmentDTO> save(@RequestBody EnrollmentDTO enrollmentDTO){
+    public ResponseEntity<EnrollmentDTO> save( @Valid @RequestBody EnrollmentDTO enrollmentDTO){
         EnrollmentDTO addedEnrollment = enrollmentsService.save(enrollmentDTO);
         return ResponseEntity.ok(addedEnrollment);
     }
@@ -125,7 +126,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @PutMapping("/{id}")
-    public ResponseEntity<EnrollmentDTO> update (@PathVariable Long id, @RequestBody EnrollmentDTO enrollmentDTO){
+    public ResponseEntity<EnrollmentDTO> update (@PathVariable Long id, @Valid @RequestBody EnrollmentDTO enrollmentDTO){
         EnrollmentDTO updatedEnrollment = enrollmentsService.update(id, enrollmentDTO);
         return ResponseEntity.ok(updatedEnrollment);
     }

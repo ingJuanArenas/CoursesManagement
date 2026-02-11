@@ -13,6 +13,7 @@ import com.courses.persistence.model.Student;
 public interface StudentsMapper {
     
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "active", ignore = true)
     Student toEntity (StudentDTO studentDTO);
 
     StudentDTO toDto (Student student);

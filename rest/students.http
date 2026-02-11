@@ -17,9 +17,8 @@ POST  http://localhost:8080/api/students
 Content-Type: application/json
 
 {
-    "name": "Pepito Perez 3",
-    "email":"pepito3@example.com",
-    "active":true
+    "name": "Pepito Perez",
+    "email":"pepito5@example.com"    
 }
 
 

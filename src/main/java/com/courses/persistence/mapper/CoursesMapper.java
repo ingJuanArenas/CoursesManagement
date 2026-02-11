@@ -13,6 +13,7 @@ import com.courses.persistence.model.Course;
 public interface CoursesMapper {
     
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "active", ignore = true)
     Course toEntity (CourseDTO courseDTO);
 
 

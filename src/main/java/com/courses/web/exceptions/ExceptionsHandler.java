@@ -2,6 +2,7 @@ package com.courses.web.exceptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -52,6 +53,11 @@ public class ExceptionsHandler {
         return ResponseEntity.status(400).body(error);
     }
   
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Error> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        Error error = new Error("Method Argument Not Valid", ex.toString());
+        return ResponseEntity.status(400).body(error);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Error> handleException(Exception e) {
