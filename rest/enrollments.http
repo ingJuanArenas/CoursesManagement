@@ -17,7 +17,7 @@ Content-Type: application/json
 
 {
   "courseId":15,
-  "studentId":9
+  "studentId":10
 }
 ### update
 PUT http://localhost:8080/api/enrollments/36
