@@ -79,9 +79,7 @@ public class EnrollmentsService {
         throw new EnrollmentOperationNotAvaliableException("Course has reached its limit");
     }
 
-    boolean alreadyExists = enrollmentsCRUD
-        .existsByCourseIdAndStudentId(dto.courseId(), dto.studentId());
-
+    boolean alreadyExists = enrollmentsCRUD.existsByCourseIdAndStudentIdAndStatus(dto.courseId(), dto.studentId(), EnrollmentStatus.ENROLLED);
     if (alreadyExists) {
         throw new AlreadyExistsException("Student already enrolled in this course");
     }
@@ -92,31 +90,34 @@ public class EnrollmentsService {
 }
 
 
-    @Transactional
+
     public EnrollmentDTO update(Long id, EnrollmentDTO enrollmentDTO) {
+
         Enrollment enrollment = enrollmentsCRUD.findById(id)
                 .orElseThrow(() -> new NotFoundException("Enrollment not found with id: " + id));
-       
-        Course course = this.coursesCRUD.findById(enrollmentDTO.courseId())
-                .orElseThrow(()-> new NotFoundException("Course Not Found"));
 
-        if(course.getEnrollments().contains(enrollment)){
-                enrollment.setStatus(enrollmentDTO.status());
-
-                    if(enrollmentDTO.status().equals(EnrollmentStatus.CANCELLED)){
-                        course.setCapacity(course.getCapacity()+1);
-                    }
-           
-        }else{
-            throw new NotFoundException("Student is not enrolled in this course");
+        if (!enrollment.getCourseId().equals(enrollmentDTO.courseId()) ||  !enrollment.getStudentId().equals(enrollmentDTO.studentId())){
+                     throw new EnrollmentOperationNotAvaliableException("Given information doesn't match with enrollment information");
         }
+        if (!enrollment.getStatus().equals(EnrollmentStatus.ENROLLED)) {
+                    throw new EnrollmentOperationNotAvaliableException("Cannot update a cancelled or completed enrollment");
+        }
+        if (enrollmentDTO.status().equals(EnrollmentStatus.ENROLLED)) {
+                    throw new EnrollmentOperationNotAvaliableException("Cannot update enrollment status to ENROLLED");
+        }
+
+        enrollment.setStatus(enrollmentDTO.status());
+
+
        return  enrollmentsRepository.update(enrollment);
+
     }
 
-    @Transactional
+
     public void delete(Long id) {
         Enrollment enrollment = enrollmentsCRUD.findById(id)
                 .orElseThrow(()-> new NotFoundException("Enrollment not found with id: " + id ));
+
         if (enrollment.getStatus().equals(EnrollmentStatus.ENROLLED)){
             throw new EnrollmentOperationNotAvaliableException("To delete an enrollment its status must be CANCELLED OR COMPLETE");
         }
