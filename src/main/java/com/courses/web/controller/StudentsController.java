@@ -112,6 +112,15 @@ public class StudentsController {
         return ResponseEntity.ok(studentsService.update(id, studentDTO));
     }
 
+    @Operation(summary = "Update student status", description = "Updates the status of an existing student.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
+    @PutMapping("/{id}/status")
+    public ResponseEntity<StudentDTO> updateStatus(@PathVariable Long id, @RequestParam boolean active){
+        return ResponseEntity.ok(studentsService.updateStatus(id, active));
+    }
 
     @Operation(summary = "Delete student", description = "Deletes an existing student.")
     @ApiResponses({

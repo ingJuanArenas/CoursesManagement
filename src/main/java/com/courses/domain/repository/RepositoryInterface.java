@@ -12,5 +12,6 @@ public interface RepositoryInterface <D,DP> {
     Page<DP> getByName(String name, Pageable pageable);
     D save (D dto);
     D update(Long id, D dto);
+    D updateStatus(Long id, boolean active);
     void delete(Long id);
 }

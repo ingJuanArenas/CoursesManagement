@@ -72,6 +72,15 @@ public class StudentsRepositoryImpl  implements RepositoryInterface<StudentDTO,S
         return studentsMapper.toDto(studentsCRUD.save(student));
     }
 
+    public StudentDTO updateStatus(Long id, boolean active) {
+        Student student = studentsCRUD.findById(id).orElseThrow(
+        () -> new NotFoundException("Student not found with id: " + id)
+        );
+
+        student.setActive(active);
+        return studentsMapper.toDto(studentsCRUD.save(student));
+    }
+
     @Override
     @Transactional
     public void delete(Long id) {

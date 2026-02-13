@@ -48,6 +48,10 @@ public class CoursesService {
         return courseRepository.update(id, courseDTO);
     }
 
+    public CourseDTO updateStatus(Long id, boolean active) {
+        return courseRepository.updateStatus(id, active);
+    }
+
     public void delete(Long id) {
         courseRepository.delete(id);
     }
