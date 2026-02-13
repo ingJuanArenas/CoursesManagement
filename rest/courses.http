@@ -4,7 +4,7 @@ GET  http://localhost:8080/api/courses
 ### get all
 GET  http://localhost:8080/api/courses?page=0&size=3
 ### get by ids
-GET  http://localhost:8080/api/courses/20
+GET  http://localhost:8080/api/courses/15
 
 
 ### get by name
