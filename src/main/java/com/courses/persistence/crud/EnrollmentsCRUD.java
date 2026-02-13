@@ -35,6 +35,12 @@ public interface EnrollmentsCRUD extends JpaRepository<Enrollment,Long> {
         WHERE e.id = :id """, nativeQuery = true)
     Optional<EnrollmentsSummary> findEnrollmentById(@Param("id") Long id);
 
-    boolean existsByCourseIdAndStudentId(Long courseId, Long studentId);
+    @Query("""
+            SELECT COUNT(*) > 0 FROM Enrollment e WHERE e.courseId = :courseId AND e.studentId = :studentId AND e.status = :status
+            """)
+    boolean existsByCourseIdAndStudentIdAndStatus(@Param("courseId") Long courseId, @Param("studentId") Long studentId, @Param("status") EnrollmentStatus status);
   
+
+
+    
 }
