@@ -73,6 +73,17 @@ public class CoursesRepositoryImpl implements RepositoryInterface<CourseDTO,Cour
 
     }
 
+    @Transactional
+    public CourseDTO updateStatus(Long id, boolean active) {
+        Course course = coursesCRUD.findById(id).orElseThrow(
+         () -> new NotFoundException("Course not found with id: " + id)
+        );
+
+        course.setActive(active);
+        return coursesMapper.toDto(coursesCRUD.save(course));
+    
+     }
+
     @Override
     @Transactional
     public void delete(Long id) {

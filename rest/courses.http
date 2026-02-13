@@ -19,7 +19,7 @@ POST  http://localhost:8080/api/courses
 Content-Type: application/json
 
 {
-    "name": "Data Structures 5",
+    "name": "Data Structures 6",
     "description": "Learn advanced data structures",
     "capacity":11
 }
@@ -35,6 +35,10 @@ Content-Type: application/json
     "description": "Learn advanced data structures - Updated",
     "capacity":20
 }
+
+### set status active/inactive
+
+PUT http://localhost:8080/api/courses/15/status?active=true
 
 ### 
 DELETE http://localhost:8080/api/courses/20

@@ -5,7 +5,7 @@ GET  http://localhost:8080/api/students
 GET  http://localhost:8080/api/students?page=2&size=2
 
 ### get by id
-GET  http://localhost:8080/api/students/17
+GET  http://localhost:8080/api/students/9
 
 ### get by name
 GET  http://localhost:8080/api/students/search?name=Ana&page=1&size=1
@@ -34,7 +34,10 @@ Content-Type: application/json
     "email":"upd1atepp@example.com",
     "active":true
 }
+###
 
+
+PUT http://localhost:8080/api/students/9/status?active=false
 ### 
 DELETE http://localhost:8080/api/students/17
 

@@ -47,6 +47,10 @@ public class StudentsService {
        return  studentRepository.update(id, studentDTO);
     }
 
+    public StudentDTO updateStatus(Long id, boolean active) {
+        return studentRepository.updateStatus(id, active);
+    }
+
     public void delete(Long id) {
         studentRepository.delete(id);
     }

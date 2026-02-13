@@ -118,6 +118,16 @@ public class CoursesController {
         return ResponseEntity.ok(coursesService.update(id,course));
     }
 
+    @Operation(summary = "Update course status", description = "Updates the status of an existing course.")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "Success"),
+        @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
+    })
+    @PutMapping("/{id}/status")
+    public ResponseEntity<CourseDTO> updateStatus(@PathVariable Long id, @RequestParam boolean active){
+        return ResponseEntity.ok(coursesService.updateStatus(id, active));
+    }
+
     @Operation(summary = "Delete a course by ID", description = "Deletes a course by its ID.")
     @ApiResponses({
         @ApiResponse(responseCode = "204", description = "No Content",content = @Content),
