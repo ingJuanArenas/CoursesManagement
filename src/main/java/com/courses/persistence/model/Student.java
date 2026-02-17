@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.courses.persistence.Audit.Auditable;
+import com.courses.web.config.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -16,6 +17,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -48,6 +50,8 @@ public class Student extends Auditable {
     @JsonIgnore
     private List<Enrollment> enrollments = new ArrayList<>();
 
+    @OneToOne
+    private User user;
 
     @Override
     public String toString() {
