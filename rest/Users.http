@@ -1,0 +1,14 @@
+GET  http://localhost:8080/api/users/customer
+
+
+
+####
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+    "username":"Pepelepe1",
+    "password":"pepe",
+    "roles": "ROLE_ADMIN"
+
+}
