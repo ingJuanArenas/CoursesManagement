@@ -1,6 +1,6 @@
 
 GET  http://localhost:8080/api/courses
-
+Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=
 ### get all
 GET  http://localhost:8080/api/courses?page=0&size=3
 ### get by ids
@@ -17,6 +17,7 @@ GET  http://localhost:8080/api/courses/2/students?page=0&size=2
 
 POST  http://localhost:8080/api/courses
 Content-Type: application/json
+Authorization: Basic YWRtaW46YWRtaW4
 
 {
     "name": "Data Structures 6",

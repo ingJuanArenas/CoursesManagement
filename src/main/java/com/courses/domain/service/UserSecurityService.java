@@ -28,7 +28,7 @@ public class UserSecurityService implements UserDetailsService {
         String[] roles = userFound.getRoles().stream().map(Role::getName).toArray(String[]::new);
         return org.springframework.security.core.userdetails.User.builder().username(userFound.getUsername())   
                                             .password(userFound.getPassword())
-                                            .roles(roles)
+                                            .authorities(roles)
                                             .build();
                 
                             
