@@ -1,5 +1,6 @@
 package com.courses.domain.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.courses.persistence.repository.UserRepositoryImpl;
@@ -11,18 +12,22 @@ public class UserService {
     
 
     private final UserRepositoryImpl userRepository;
-
-    public UserService(UserRepositoryImpl userRepository) {
-        this.userRepository = userRepository;
-    }
-
+    private final PasswordEncoder passwordEncoder;
     
+    
+
+
+    public UserService(UserRepositoryImpl userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User getUserById(String username){
         return userRepository.getUserById(username); 
     }
 
     public User saveUser(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.saveUser(user);
     }
 
