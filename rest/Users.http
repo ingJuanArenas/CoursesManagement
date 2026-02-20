@@ -1,18 +1,31 @@
 //ONLY ADMIN CAN ACCESS THIS ENDPOINT
 //Authorization: Basic YWRtaW46YWRtaW4=
-GET  http://localhost:8080/api/users/customer
-Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=    
+GET  http://localhost:8080/api/users/usuario1
+Authorization: Basic dXN1YXJpbzE6cGVwZQ==
+
 //customer denied
 
 
 ####
 POST http://localhost:8080/api/users
 Content-Type: application/json
-Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=
+Authorization: Basic YWRtaW46YWRtaW4=
+
 
 {
-    "username":"Pepelepe1",
+    "username":"usuario2",
     "password":"pepe",
-    "roles": "ROLE_ADMIN"
+    "roles": [
+       {
+        "id":2,
+        "name":"ROLE_USER"
+       }
+    ]
 
 }
+
+
+
+####
+DELETE http://localhost:8080/api/users/usuario1
+Authorization: Basic YWRtaW46YWRtaW4=

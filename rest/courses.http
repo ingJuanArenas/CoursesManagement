@@ -1,14 +1,13 @@
 
 GET  http://localhost:8080/api/courses
-Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=
 ### get all
 GET  http://localhost:8080/api/courses?page=0&size=3
 ### get by ids
-GET  http://localhost:8080/api/courses/15
+GET  http://localhost:8080/api/courses/1
 
 
 ### get by name
-GET  http://localhost:8080/api/courses/search?name=a&page3&size=2
+GET  http://localhost:8080/api/courses/search?name=Data&page3&size=2
 
 ### get students by course id
 
@@ -17,11 +16,11 @@ GET  http://localhost:8080/api/courses/2/students?page=0&size=2
 
 POST  http://localhost:8080/api/courses
 Content-Type: application/json
-Authorization: Basic YWRtaW46YWRtaW4
+Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=
 
 {
-    "name": "Data Structures 6",
-    "description": "Learn advanced data structures",
+    "name":"Java basics",
+    "description": "Learn the basics of Java programming",
     "capacity":11
 }
 
@@ -30,6 +29,7 @@ Authorization: Basic YWRtaW46YWRtaW4
 
 PUT http://localhost:8080/api/courses/20
 Content-Type: application/json
+Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=
 
 {
     "name": "Data Structures 5 Updated",

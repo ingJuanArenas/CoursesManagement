@@ -1,6 +1,7 @@
 ### create student with name empty
 
 POST  http://localhost:8080/api/students
+Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=
 Content-Type: application/json
 
 {
