@@ -3,6 +3,8 @@ package com.courses.web.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/courses")
+@EnableMethodSecurity(securedEnabled = true)
 public class CoursesController {
     
     private final CoursesService coursesService;
@@ -88,6 +91,7 @@ public class CoursesController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/{id}/students")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<StudentsSummary>> getStudentsByCourseId(@PathVariable Long id, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
          Page<StudentsSummary> students = coursesService.getStudentsByCourseId(id, page, size);
         if (students.isEmpty()) {
@@ -102,6 +106,7 @@ public class CoursesController {
         @ApiResponse(responseCode = "409", description = "Conflict",content = @Content)
     })
     @PostMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<CourseDTO> save( @Valid @RequestBody CourseDTO course){
         return ResponseEntity.ok(coursesService.save(course));
     }
@@ -114,6 +119,7 @@ public class CoursesController {
         @ApiResponse(responseCode = "409", description = "Conflict",content = @Content)
     })
     @PutMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<CourseDTO> update(@PathVariable Long id, @Valid @RequestBody CourseDTO course){
         return ResponseEntity.ok(coursesService.update(id,course));
     }
@@ -124,6 +130,7 @@ public class CoursesController {
         @ApiResponse(responseCode = "404", description = "Not Found", content = @Content)
     })
     @PutMapping("/{id}/status")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<CourseDTO> updateStatus(@PathVariable Long id, @RequestParam boolean active){
         return ResponseEntity.ok(coursesService.updateStatus(id, active));
     }
@@ -134,6 +141,7 @@ public class CoursesController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         coursesService.delete(id);
         return ResponseEntity.noContent().build();

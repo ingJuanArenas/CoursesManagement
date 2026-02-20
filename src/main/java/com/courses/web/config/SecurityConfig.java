@@ -21,13 +21,8 @@ public class SecurityConfig {
         .cors(cors-> {})
         .httpBasic(Customizer.withDefaults())
         .authorizeHttpRequests(auth->{
-            auth.requestMatchers("/api/users/**").hasAuthority("ROLE_ADMIN");
-            auth.requestMatchers("/api/enrollments/**").hasAuthority("ROLE_ADMIN");
-            auth.requestMatchers(HttpMethod.POST, "/api/**").hasAuthority("ROLE_ADMIN");
-            auth.requestMatchers(HttpMethod.PUT, "/api/**").hasAuthority("ROLE_ADMIN");
-            auth.requestMatchers(HttpMethod.DELETE, "/api/**").hasAuthority("ROLE_ADMIN");
-            auth.requestMatchers(HttpMethod.GET, "/api/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
-
+            auth.requestMatchers(HttpMethod.GET, "/api/courses/**").permitAll();
+            auth.anyRequest().authenticated();
         });
 
 
