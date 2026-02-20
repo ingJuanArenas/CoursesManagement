@@ -2,6 +2,7 @@ package com.courses.web.exceptions;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,6 +16,12 @@ import com.courses.domain.exceptions.NotFoundException;
 @RestControllerAdvice
 public class ExceptionsHandler {
     
+    @ExceptionHandler(AuthorizationDeniedException.class)
+    public ResponseEntity<Error> handleAuthorizationDeniedException(AuthorizationDeniedException e) {
+        Error error = new Error("Forbidden", e.toString());
+        return ResponseEntity.status(403).body(error);
+    }
+
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Error> handleNotFoundException(NotFoundException e) {
         Error error = new Error("Not Found", e.toString());
