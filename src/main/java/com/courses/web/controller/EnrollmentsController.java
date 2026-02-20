@@ -2,6 +2,8 @@ package com.courses.web.controller;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/enrollments")
+@EnableMethodSecurity(securedEnabled = true)
 public class EnrollmentsController {
 
     private final EnrollmentsService enrollmentsService;
@@ -42,6 +45,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EnrollmentDTO>> getAll(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
          Page<EnrollmentDTO> enrollments = enrollmentsService.getAll(page, size);
         if (enrollments.isEmpty()) {
@@ -58,6 +62,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<EnrollmentsSummary> getById(@PathVariable Long id){
         EnrollmentsSummary enrollment = enrollmentsService.getById(id);
         return ResponseEntity.ok(enrollment);
@@ -70,6 +75,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/status")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EnrollmentDTO>> getAllByStatus(@RequestParam("status")EnrollmentStatus status, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
          Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByStatus(status, page, size);
         if (enrollments.isEmpty()) {
@@ -85,6 +91,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/course")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Page<EnrollmentDTO>> getAllByCourseId(@RequestParam("courseId")Long courseId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByCourseId(courseId, page, size);
         if (enrollments.isEmpty()) {
@@ -99,6 +106,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @GetMapping("/student")
+    @Secured("ROLE_ADMIN") // SOON : ONLY STUDENTS CAN SEE THEIR ENROLLMENTS AVOIDING BROCKEN ACCESS CONTROL
     public ResponseEntity<Page<EnrollmentDTO>> getAllByStudentId(@RequestParam("studentId")Long studentId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size){
         Page<EnrollmentDTO> enrollments = enrollmentsService.getAllByStudentId(studentId, page, size);
         if (enrollments.isEmpty()) {
@@ -113,6 +121,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @PostMapping
+    @Secured("ROLE_ADMIN") // SOON : ONLY STUDENTS CAN ENROLL IN A COURSE AVOIDING BROCKEN ACCESS CONTROL
     public ResponseEntity<EnrollmentDTO> save( @Valid @RequestBody EnrollmentDTO enrollmentDTO){
         EnrollmentDTO addedEnrollment = enrollmentsService.save(enrollmentDTO);
         return ResponseEntity.ok(addedEnrollment);
@@ -124,6 +133,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @PutMapping("/{id}")
+    @Secured("ROLE_ADMIN") // SOON : ONLY STUDENTS CAN UPDATE THEIR ENROLLMENTS AVOIDING BROCKEN ACCESS CONTROL
     public ResponseEntity<EnrollmentDTO> update (@PathVariable Long id, @Valid @RequestBody EnrollmentDTO enrollmentDTO){
         EnrollmentDTO updatedEnrollment = enrollmentsService.update(id, enrollmentDTO);
         return ResponseEntity.ok(updatedEnrollment);
@@ -136,6 +146,7 @@ public class EnrollmentsController {
         @ApiResponse(responseCode = "404", description = "Not Found",content = @Content)
     })
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         enrollmentsService.delete(id);
         return ResponseEntity.noContent().build();
