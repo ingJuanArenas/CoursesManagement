@@ -1,7 +1,7 @@
 //ONLY ADMIN CAN ACCESS TO THIS ENDPOINT
  
 GET  http://localhost:8080/api/enrollments
-Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI= 
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MjIwMjkwNywiZXhwIjoxNzcyNDYyMTA3fQ.9T6a5Fndz6tndUVhuSFcZq3NnxwN04O-PBZChO0fdd8
 // denied
 ### get all
 GET  http://localhost:8080/api/enrollments?page=1&size=4
