@@ -1,5 +1,5 @@
 GET  http://localhost:8080/api/students
-Authorization: Basic customer:customer
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MjIwMzA5MCwiZXhwIjoxNzcyNDYyMjkwfQ.r6vuP6HixEx6hfceWO6QIqb_rwEsBpkhOyB2KXHOnr8
 
 ### get all
 GET  http://localhost:8080/api/students?page=2&size=2

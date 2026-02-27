@@ -1,5 +1,6 @@
 
 GET  http://localhost:8080/api/courses
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MjIwMjkwNywiZXhwIjoxNzcyNDYyMTA3fQ.9T6a5Fndz6tndUVhuSFcZq3NnxwN04O-PBZChO0fdd8
 ### get all
 GET  http://localhost:8080/api/courses?page=0&size=3
 ### get by ids
