@@ -2,7 +2,9 @@ package com.courses.persistence.Audit;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,4 +23,12 @@ public class Auditable {
      @JsonIgnore
      @LastModifiedDate
      private LocalDateTime lastModifiedDate;
+
+     @Column(name = "created_by", updatable = false)
+     @CreatedBy
+     private String createdBy;
+
+     @Column(name = "last_modified_by")
+     @LastModifiedBy
+     private String lastModifiedBy;
 }
