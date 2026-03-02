@@ -1,7 +1,7 @@
 //ONLY ADMIN CAN ACCESS THIS ENDPOINT
 //Authorization: Basic YWRtaW46YWRtaW4=
 GET  http://localhost:8080/api/users/usuario1
-Authorization: Basic dXN1YXJpbzE6cGVwZQ==
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTc3MjQ2NjIwNywiZXhwIjoxNzcyNzI1NDA3fQ.T1y5vq9BXkQBXdcSf9ipqIiFy3J1sKnyVPeJjV5bP8k
 
 //customer denied
 
