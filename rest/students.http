@@ -1,11 +1,11 @@
 GET  http://localhost:8080/api/students
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MjQ2NjI0MiwiZXhwIjoxNzcyNzI1NDQyfQ.ZaRj9-hEfbCm-hMnX2pSFx0o4udS3uDGibWNW6kjbsU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3NDM2MzU1MSwiZXhwIjoxNzc0NjIyNzUxfQ.e5T0a2MP_7tOsYp7L0lTN7exVKi71W7TZKfLpiG5gsM
 ### get all
 GET  http://localhost:8080/api/students?page=2&size=2
 
 ### get by id
 GET  http://localhost:8080/api/students/9
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MjQ2NjI0MiwiZXhwIjoxNzcyNzI1NDQyfQ.ZaRj9-hEfbCm-hMnX2pSFx0o4udS3uDGibWNW6kjbsU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3NDM2MzU1MSwiZXhwIjoxNzc0NjIyNzUxfQ.e5T0a2MP_7tOsYp7L0lTN7exVKi71W7TZKfLpiG5gsM
 
 ### get by name
 GET  http://localhost:8080/api/students/search?name=Ana&page=1&size=1
@@ -13,16 +13,17 @@ GET  http://localhost:8080/api/students/search?name=Ana&page=1&size=1
 ### get courses by student id
 
 GET   http://localhost:8080/api/students/4/courses?page=1&size=2
-Authorization: Basic Y3VzdG9tZXI6Y3VzdG9tZXI=
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3NDM2MzU1MSwiZXhwIjoxNzc0NjIyNzUxfQ.e5T0a2MP_7tOsYp7L0lTN7exVKi71W7TZKfLpiG5gsM
+
 ### create
 
 POST  http://localhost:8080/api/students
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MjQ2NzkxMCwiZXhwIjoxNzcyNzI3MTEwfQ.zV3tKMNFa-xMxiD0XFyLsrpZMCOhGafzVONwhydZY9E
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3NDM2MzU1MSwiZXhwIjoxNzc0NjIyNzUxfQ.e5T0a2MP_7tOsYp7L0lTN7exVKi71W7TZKfLpiG5gsM
 
 {
     "name": "Pepito Perez8",
-    "email":"pepito8@example.com"    
+    "email":"pepito18@example.com"    
 }
 
 
@@ -30,6 +31,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3MjQ2N
 
 PUT http://localhost:8080/api/students/17
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc3NDM2MzU1MSwiZXhwIjoxNzc0NjIyNzUxfQ.e5T0a2MP_7tOsYp7L0lTN7exVKi71W7TZKfLpiG5gsM
+
 
 {
     "name": "Pepito Perez Updated",
